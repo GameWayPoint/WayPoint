@@ -533,7 +533,7 @@
   function gtavStyle(){
     const W=(...s)=>['interpolate',['linear'],['zoom'],...s];
     return {version:8,
-      glyphs:'fonts/{fontstack}/{range}.pbf',
+      glyphs:'{fontstack}/{range}.pbf',
       sprite:'https://tiles.openfreemap.org/sprites/ofm_f384/ofm',
       sources:{openmaptiles:{type:'vector',url:'https://tiles.openfreemap.org/planet'}},
       layers:[
@@ -569,7 +569,7 @@
       let ok=false,done=false;
       gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});
       gwMap.on('sourcedata',e=>{if(e.sourceId==='openmaptiles'&&e.isSourceLoaded)ok=true;});
-      gwMap.on('error',()=>{if(!ok&&!done){done=true;toSynth();}});
+      // Only fall back to the demo if the REAL vector tiles never load (never on font/glyph errors)
       setTimeout(()=>{if(!ok&&!done){done=true;toSynth();}},7000);
     }catch(e){toSynth();}
   }
