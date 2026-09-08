@@ -436,7 +436,7 @@
     hair:'<svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.3"/><circle cx="6" cy="18" r="2.3"/><path d="M7.7 7.7 20 18M7.7 16.3 20 6"/></svg>'
   };
   const MCAT={food:'#ff6a3d',shop:'#3ddc84',clothing:'#ff9f1c',bar:'#c65cff',fuel:'#38b6ff',hotel:'#ffb020',hair:'#ff5da2'};
-  const MPOIS=[{lng:-118.2985,lat:34.0505,type:'bar'},{lng:-118.2870,lat:34.0545,type:'shop'},{lng:-118.3075,lat:34.0455,type:'food'},{lng:-118.2820,lat:34.0420,type:'fuel'},{lng:-118.3120,lat:34.0380,type:'hotel'},{lng:-118.2930,lat:34.0400,type:'clothing'},{lng:-118.3040,lat:34.0560,type:'hair'}];
+  const MPOIS=[];
   const MT={
     neon:{bg:'#9ea4a8',water:'#3a6ea8',green:'#5f8a4e',road:'#82888c',roadHi:'#c3c8cb',bldg:'#8f9599',label:'#242a30',halo:'#d3dae0',icon:'gtav',routeCol:'#ff3d8a'},
     metro:{bg:'#141416',water:'#141416',green:'#181a1c',road:'#63676b',roadHi:'#b4b8bc',bldg:'#9ea4a9',label:'#e5e5e5',halo:'#0c0c0e',icon:'gtav',routeCol:'#f0f2f4'},
@@ -445,7 +445,7 @@
     blocks:{bg:'#5a8f3c',water:'#4a6fd0',green:'#3f6e2a',road:'#8a6a3f',roadHi:'#a07d4a',bldg:'#7d8a55',label:'#ffffff',halo:'#1e3a12',icon:'none',routeCol:'#d08a3f'}
   };
   const ORIGIN=[-118.30,34.045];
-  let gwMap=null,gwStarted=false,curKey='metro',gwMarkers=[],originMk=null,destMk=null,destLL=null,dirMode=false,streetMks=[],synthActive=false;
+  let gwMap=null,gwStarted=false,curKey='metro',gwMarkers=[],originMk=null,destMk=null,destLL=null,dirMode=false,streetMks=[],synthActive=false,userLL=null,geoWatch=null;
   const STREETS=[{lng:-118.3055,lat:34.0520,name:'Ocean Drive'},{lng:-118.2905,lat:34.0490,name:'5th Street'},{lng:-118.3110,lat:34.0380,name:'Harbor Way'},{lng:-118.2850,lat:34.0570,name:'Sunset Avenue'},{lng:-118.2990,lat:34.0355,name:'Marina Boulevard'},{lng:-118.2955,lat:34.0600,name:'Vinewood Blvd'}];
   function setFontClass(){const g=document.getElementById('gwmap');if(!g)return;g.classList.remove('f-gta','f-rdr','f-mc');g.classList.add(curKey==='frontier'?'f-rdr':curKey==='blocks'?'f-mc':'f-gta');}
   function addStreetLabels(t){streetMks.forEach(m=>m.remove());streetMks=[];if(!gwMap||!synthActive)return;STREETS.forEach(s=>{const el=document.createElement('div');el.className='streetlbl';el.textContent=s.name;el.style.color=t.label;el.style.textShadow='0 0 3px '+t.halo+',0 1px 2px '+t.halo+',0 0 6px '+t.halo;streetMks.push(new maplibregl.Marker({element:el}).setLngLat([s.lng,s.lat]).addTo(gwMap));});}
@@ -509,21 +509,37 @@
     if(!gwMap.getLayer('gw-route-core'))gwMap.addLayer({id:'gw-route-core',type:'line',source:'gw-route',layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':t.routeCol,'line-width':5}});
     else sp('gw-route-core','line-color',t.routeCol);
   }
-  function ensureOrigin(){if(originMk||!gwMap)return;const el=document.createElement('div');el.className='gworigin';el.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 1.5 L20.8 21.5 L12 16 L3.2 21.5 Z" fill="#ffffff" stroke="#0c0d0f" stroke-width="1.7" stroke-linejoin="round"/></svg>';originMk=new maplibregl.Marker({element:el}).setLngLat(ORIGIN).addTo(gwMap);}
-  function afterLoad(){const t=MT[curKey];if(synthActive){recolorReal(t);setFontClass();addStreetLabels(t);}ensureRoute(t);addMarkers(t);ensureOrigin();gwMap.on('click',e=>{if(dirMode)setDestination(e.lngLat);});}
+  function ensureOrigin(){if(originMk||!gwMap)return;const el=document.createElement('div');el.className='gworigin';el.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 1.5 L20.8 21.5 L12 16 L3.2 21.5 Z" fill="#ffffff" stroke="#0c0d0f" stroke-width="1.7" stroke-linejoin="round"/></svg>';originMk=new maplibregl.Marker({element:el,rotationAlignment:'map'}).setLngLat(userLL||ORIGIN).addTo(gwMap);}
+  function onPos(pos){userLL=[pos.coords.longitude,pos.coords.latitude];if(!gwMap)return;ensureOrigin();originMk.setLngLat(userLL);const h=pos.coords.heading;if(h!=null&&!isNaN(h)){try{originMk.setRotation(h);}catch(e){}}}
+  function locateUser(fly){if(!navigator.geolocation||!gwMap)return;navigator.geolocation.getCurrentPosition(function(pos){onPos(pos);if(fly)gwMap.easeTo({center:userLL,zoom:15});},function(){},{enableHighAccuracy:true,timeout:8000,maximumAge:15000});if(!geoWatch){try{geoWatch=navigator.geolocation.watchPosition(onPos,function(){},{enableHighAccuracy:true,maximumAge:5000});}catch(e){}}}
+  function afterLoad(){const t=MT[curKey];if(synthActive){recolorReal(t);setFontClass();addStreetLabels(t);}ensureRoute(t);addMarkers(t);ensureOrigin();if(!synthActive)locateUser(true);gwMap.on('click',e=>{if(dirMode)setDestination(e.lngLat);});}
 
   function haversine(a,b){const R=6371,dLat=(b[1]-a[1])*Math.PI/180,dLng=(b[0]-a[0])*Math.PI/180,la1=a[1]*Math.PI/180,la2=b[1]*Math.PI/180;const x=Math.sin(dLat/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLng/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
-  function setDestination(ll,label){
+  function fitRoute(a,b){try{const bb=new maplibregl.LngLatBounds(a,a);bb.extend(b);gwMap.fitBounds(bb,{padding:70,maxZoom:15,duration:800});}catch(e){}}
+  async function setDestination(ll,label){
     destLL=[ll.lng,ll.lat];
     if(destMk)destMk.remove();const el=document.createElement('div');el.className='gwdest';destMk=new maplibregl.Marker({element:el,anchor:'bottom'}).setLngLat(destLL).addTo(gwMap);
-    const mid=[(ORIGIN[0]+destLL[0])/2+(destLL[1]-ORIGIN[1])*0.12,(ORIGIN[1]+destLL[1])/2-(destLL[0]-ORIGIN[0])*0.12];
-    const line={type:'FeatureCollection',features:[{type:'Feature',geometry:{type:'LineString',coordinates:[ORIGIN,mid,destLL]}}]};
-    const s=gwMap.getSource('gw-route');if(s)s.setData(line);
-    const km=haversine(ORIGIN,destLL)*1.25;const min=Math.max(1,Math.round(km/38*60));
     document.getElementById('destInput').value=label||'Dropped pin';
-    document.getElementById('dirMeta').innerHTML='<b>'+km.toFixed(1)+' km</b> · about <b>'+min+' min</b> by car';
+    const dm=document.getElementById('dirMeta');const s=gwMap.getSource('gw-route');
+    const from=userLL||gwMap.getCenter().toArray();
+    dm.textContent='Finding route…';
+    try{
+      const url='https://router.project-osrm.org/route/v1/driving/'+from[0]+','+from[1]+';'+destLL[0]+','+destLL[1]+'?overview=full&geometries=geojson';
+      const r=await fetch(url);const j=await r.json();
+      if(j&&j.code==='Ok'&&j.routes&&j.routes[0]){
+        const rt=j.routes[0];
+        if(s)s.setData({type:'Feature',properties:{},geometry:rt.geometry});
+        const km=rt.distance/1000,min=Math.max(1,Math.round(rt.duration/60));
+        dm.innerHTML='<b>'+km.toFixed(1)+' km</b> · about <b>'+min+' min</b> by car';
+        fitRoute(from,destLL);return;
+      }
+    }catch(e){}
+    if(s)s.setData({type:'Feature',properties:{},geometry:{type:'LineString',coordinates:[from,destLL]}});
+    const km=haversine(from,destLL)*1.3,min=Math.max(1,Math.round(km/38*60));
+    dm.innerHTML='<b>~'+km.toFixed(1)+' km</b> · about <b>'+min+' min</b> (estimert)';
+    fitRoute(from,destLL);
   }
-  function clearRoute(){destLL=null;if(destMk){destMk.remove();destMk=null;}const s=gwMap&&gwMap.getSource('gw-route');if(s)s.setData({type:'FeatureCollection',features:[]});document.getElementById('destInput').value='';document.getElementById('dirMeta').textContent='Tap anywhere on the map to drop a destination.';}
+  function clearRoute(){destLL=null;if(destMk){destMk.remove();destMk=null;}const s=gwMap&&gwMap.getSource('gw-route');if(s)s.setData({type:'FeatureCollection',features:[]});document.getElementById('destInput').value='';document.getElementById('dirMeta').textContent='Type a destination and press Go — or tap the map to drop a pin.';}
 
   function applyMap(k){curKey=k;const t=MT[k];document.querySelectorAll('#mapStyles button').forEach(x=>x.classList.toggle('active',x.dataset.k===k));setMap(document.getElementById('mapsWrap'),null,k);if(gwMap){recolorReal(t);ensureRoute(t);addMarkers(t);setFontClass();addStreetLabels(t);}}
 
@@ -578,12 +594,12 @@
   document.getElementById('dirClear').addEventListener('click',clearRoute);
   document.getElementById('zin').addEventListener('click',()=>gwMap&&gwMap.zoomIn());
   document.getElementById('zout').addEventListener('click',()=>gwMap&&gwMap.zoomOut());
-  document.getElementById('locate').addEventListener('click',()=>gwMap&&gwMap.easeTo({center:ORIGIN,zoom:12.8}));
+  document.getElementById('locate').addEventListener('click',()=>{if(!gwMap)return;if(userLL){gwMap.easeTo({center:userLL,zoom:15});}else{locateUser(true);}});
   let searchMk=null;
   async function geocode(q){try{const r=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q='+encodeURIComponent(q));const j=await r.json();if(j&&j[0])return[parseFloat(j[0].lon),parseFloat(j[0].lat)];}catch(e){}return null;}
   async function doSearch(q){if(!q||!gwMap)return;const si=document.getElementById('searchInput');si.blur();const c=await geocode(q);if(c){gwMap.flyTo({center:c,zoom:14});if(searchMk)searchMk.remove();const el=document.createElement('div');el.className='gwdest';searchMk=new maplibregl.Marker({element:el,anchor:'bottom'}).setLngLat(c).addTo(gwMap);}else{const old=si.placeholder;si.value='';si.placeholder='No result in preview — search works on the live site';setTimeout(()=>si.placeholder=old,2800);}}
   document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();doSearch(e.target.value.trim());}});
-  document.getElementById('dirGo').addEventListener('click',async()=>{const q=document.getElementById('destInput').value.trim();const dm=document.getElementById('dirMeta');if(!q){dm.textContent='Type a destination, or tap the map.';return;}dm.textContent='Finding route…';const c=await geocode(q);if(c){setDestination({lng:c[0],lat:c[1]},q);gwMap.flyTo({center:c,zoom:13});}else{dm.textContent='Couldn’t find that in the preview — tap the map to drop a pin (search works on the live site).';}});
+  document.getElementById('dirGo').addEventListener('click',async()=>{const q=document.getElementById('destInput').value.trim();const dm=document.getElementById('dirMeta');if(!q){dm.textContent='Type a destination, or tap the map.';return;}dm.textContent='Finding place…';const c=await geocode(q);if(c){await setDestination({lng:c[0],lat:c[1]},q);}else{dm.textContent='Fant ikke stedet — prøv et mer spesifikt søk, eller trykk på kartet for å sette et punkt.';}});
 
   /* ===== router + reveals ===== */
   const views=document.querySelectorAll('[data-viewpage]');
