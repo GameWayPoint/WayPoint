@@ -485,7 +485,7 @@
   ];
   function addPOIImg(name,uri){return new Promise(function(res){const img=new Image();img.onload=function(){try{if(gwMap&&!gwMap.hasImage(name))gwMap.addImage(name,img,{pixelRatio:2});}catch(e){}res();};img.onerror=function(){res();};img.src=uri;});}
   function buildPOIPanel(){const list=document.getElementById('poiList');if(!list||list.dataset.built)return;list.dataset.built='1';POICATS.forEach(function(c){const row=document.createElement('div');row.className='poirow';row.dataset.key=c.key;row.innerHTML='<span class="pic"><img src="'+POIICONSUI[c.key]+'"></span><span class="plbl">'+c.label+'</span><span class="sw2"></span>';row.addEventListener('click',function(){const on=row.classList.toggle('on');try{gwMap.setLayoutProperty('poi-'+c.key,'visibility',on?'visible':'none');}catch(e){}});list.appendChild(row);});}
-  async function setupPOI(){buildPOIPanel();if(poiReady||!gwMap)return;poiReady=true;for(const c of POICATS){await addPOIImg('gw-'+c.key,POIICONS[c.key]);}for(const c of POICATS){const id='poi-'+c.key;if(gwMap.getLayer(id))continue;const layer={id:id,type:'symbol',source:'openmaptiles','source-layer':c.src,minzoom:12,layout:{'icon-image':'gw-'+c.key,'icon-size':0.6,'icon-allow-overlap':true,'icon-anchor':'center','visibility':'none'}};if(c.filter)layer.filter=c.filter;try{gwMap.addLayer(layer);wirePOI(id,c);}catch(e){}}}
+  async function setupPOI(){buildPOIPanel();if(poiReady||!gwMap)return;poiReady=true;for(const c of POICATS){await addPOIImg('gw-'+c.key,POIICONS[c.key]);}for(const c of POICATS){const id='poi-'+c.key;if(gwMap.getLayer(id))continue;const layer={id:id,type:'symbol',source:'openmaptiles','source-layer':c.src,minzoom:12,layout:{'icon-image':'gw-'+c.key,'icon-size':0.54,'icon-allow-overlap':true,'icon-anchor':'center','visibility':'none'}};if(c.filter)layer.filter=c.filter;try{gwMap.addLayer(layer);wirePOI(id,c);}catch(e){}}}
   function esc(s){return String(s).replace(/[&<>"]/g,function(m){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m];});}
   function wirePOI(id,c){gwMap.on('click',id,function(e){const f=e.features&&e.features[0];if(!f)return;const p=f.properties||{};const name=p.name||p['name:latin']||p['name:en']||c.label;let ll=e.lngLat;try{if(f.geometry&&f.geometry.type==='Point')ll=f.geometry.coordinates;}catch(_){}if(poiPopup)poiPopup.remove();poiPopup=new maplibregl.Popup({offset:14,closeButton:false,className:'gwpopup'}).setLngLat(ll).setHTML('<div class="gwpop"><img src="'+POIICONSUI[c.key]+'"><div class="gwpt"><b>'+esc(name)+'</b><span>'+c.label+'</span></div></div>').addTo(gwMap);});gwMap.on('mouseenter',id,function(){gwMap.getCanvas().style.cursor='pointer';});gwMap.on('mouseleave',id,function(){gwMap.getCanvas().style.cursor='';});}
 
@@ -625,12 +625,12 @@
     if(gwStarted)return;gwStarted=true;
     if(typeof maplibregl==='undefined'){showPhone();return;}
     try{
-      gwMap=new maplibregl.Map({container:'gwmap',style:gtavStyle(),center:ORIGIN,zoom:13,minZoom:3,maxZoom:19,attributionControl:false});
-      let ok=false,done=false;
+      gwMap=new maplibregl.Map({container:'gwmap',style:gtavStyle(),center:ORIGIN,zoom:13,minZoom:3,maxZoom:19,attributionControl:false,fadeDuration:0});
+      let ok=false,done=false,fbTimer=null;
       gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});
-      gwMap.on('sourcedata',e=>{if(e.sourceId==='openmaptiles'&&e.isSourceLoaded)ok=true;});
-      // Only fall back to the demo if the REAL vector tiles never load (never on font/glyph errors)
-      setTimeout(()=>{if(!ok&&!done){done=true;toSynth();}},7000);
+      gwMap.on('sourcedata',e=>{if(e.sourceId==='openmaptiles'&&e.isSourceLoaded){ok=true;if(fbTimer){clearTimeout(fbTimer);fbTimer=null;}}});
+      // Only fall back to the demo if the REAL vector tiles never load; clear it once they do so it can never swap late.
+      fbTimer=setTimeout(()=>{if(!ok&&!done){done=true;toSynth();}},7000);
     }catch(e){toSynth();}
   }
   document.getElementById('mapStyles').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;applyMap(b.dataset.k);});
