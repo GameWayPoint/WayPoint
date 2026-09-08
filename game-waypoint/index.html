@@ -101,6 +101,10 @@
   .t-neon{--land:#9ea4a8;--water:#3a6ea8;--greenm:#5f8a4e;--building:#8f9599;--bstroke:#6f757a;--road-minor:#82888c;--road-major:#c3c8cb;--route:#ff3d8a;--contour:#7f868b;--hud:#fff;--hudbg:rgba(24,22,28,.55)}
   .t-metro{--land:#141416;--water:#141416;--greenm:#182018;--building:#9ea4a9;--bstroke:#63676b;--road-minor:#63676b;--road-major:#b4b8bc;--route:#b14ff2;--contour:#3a3a3e;--hud:#fff;--hudbg:rgba(14,14,17,.62)}
   .t-frontier{--land:#d9c7a0;--water:#9fb9a4;--greenm:#c7b98a;--building:#cdbb8e;--bstroke:#463f34;--road-minor:#4a453c;--road-major:#34302a;--route:#8f3a1e;--contour:#b98f5e;--hud:#3f2f1c;--hudbg:rgba(224,208,172,.85)}
+  .t-vice{--land:#75757b;--water:#4f7678;--greenm:#576360;--building:#7a7780;--bstroke:#6a676f;--road-minor:#b3abad;--road-major:#b3abad;--route:#ff4d9e;--contour:#8a848c;--hud:#2b2830;--hudbg:rgba(201,198,191,.85)}
+  .t-vicenight{--land:#10101f;--water:#4f7678;--greenm:#1e2a24;--building:#332e4d;--bstroke:#3f3a5c;--road-minor:#42404f;--road-major:#42404f;--route:#e37da8;--contour:#2e2c3c;--hud:#eceaf4;--hudbg:rgba(16,16,31,.7)}
+  .t-vice .ic{stroke:#2a2830}
+  .t-vicenight .ic{stroke:#eceaf4}
   .cat-food{--cat:#ff6a3d}.cat-shop{--cat:#3ddc84}.cat-fuel{--cat:#38b6ff}.cat-bar{--cat:#c65cff}.cat-hotel{--cat:#ffb020}
 
   .sw{display:flex;gap:6px;justify-content:center;margin:1rem auto 0;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;width:max-content}
@@ -217,6 +221,7 @@
   .poirow.on .sw2{background:#b14ff2}
   .poirow.on .sw2::after{left:17px}
   #dayNight{left:16px;right:auto;transform:none}
+  #dayNight[hidden]{display:none!important}
   .gwpopup .maplibregl-popup-content{background:var(--card);border:1px solid var(--line-2);border-radius:12px;padding:.55rem .7rem;box-shadow:0 12px 30px rgba(0,0,0,.55);color:var(--ink)}
   .gwpopup .maplibregl-popup-anchor-top .maplibregl-popup-tip{border-bottom-color:var(--card)}
   .gwpopup .maplibregl-popup-anchor-bottom .maplibregl-popup-tip{border-top-color:var(--card)}
@@ -288,6 +293,7 @@
       </div></div>
       <div class="sw" id="heroSw">
         <button data-k="metro" class="active"><span class="dot" style="background:#9ea4a9"></span>GTA V</button>
+        <button data-k="vice"><span class="dot" style="background:#ff4d9e"></span>GTA VI</button>
       </div>
     </div>
   </div>
@@ -347,14 +353,14 @@
     <div class="fart"><div class="phone" style="max-width:260px"><div class="wrapm t-metro gtav mode-flat"><div class="viewport"><div class="stage"></div></div><div class="glow"></div><div class="hud dist"><div class="b">1.04 km</div><div class="s">next turn</div></div><div class="hud compass"><b>N</b></div></div></div></div>
   </div>
   <div class="frow rev reveal">
-    <div class="fcopy"><span class="eyebrow">Map style</span><h2>The GTA V look, on real streets</h2><p>Your entire map, reskinned into a dark, minimal GTA V-inspired style — with our own art, colors and place icons. The roads stay real.</p>
-      <ul class="fchecks"><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Dark, minimal GTA V style</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Custom game-style place icons</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Day &amp; night looks</li></ul></div>
-    <div class="fart"><div class="phone" style="max-width:260px"><div class="wrapm t-metro gtav mode-flat"><div class="viewport"><div class="stage"></div></div><div class="hud compass"><b>N</b></div></div></div></div>
+    <div class="fcopy"><span class="eyebrow">Map styles</span><h2>Two worlds — GTA V &amp; GTA VI</h2><p>Switch between a dark, minimal GTA V look and a bright GTA VI Vice style with Day &amp; Night modes — with our own art, colors and place icons. Your streets stay real; only the vibe changes.</p>
+      <ul class="fchecks"><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>GTA V &amp; GTA VI styles</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Custom game-style place icons</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Day &amp; night looks</li></ul></div>
+    <div class="fart"><div class="phone" style="max-width:260px"><div class="wrapm t-vice gtav mode-flat"><div class="viewport"><div class="stage"></div></div><div class="hud compass"><b>N</b></div></div></div></div>
   </div>
   <div class="frow reveal">
     <div class="fcopy"><span class="eyebrow">In the car</span><h2>Made for Apple CarPlay</h2><p>Big, glanceable and safe — your styled map right on the dashboard, next turn front and center.</p>
       <ul class="fchecks"><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Full-screen map on the car display</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Distraction-light, driver-safe UI</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Search, routes &amp; voice in the car</li></ul></div>
-    <div class="fart"><div class="phone" style="max-width:260px"><div class="wrapm t-metro gtav mode-flat"><div class="viewport"><div class="stage"></div></div><div class="hud dist"><div class="b">2.3 mi</div><div class="s">next turn</div></div><div class="hud compass"><b>N</b></div></div></div></div>
+    <div class="fart"><div class="phone" style="max-width:260px"><div class="wrapm t-vicenight gtav mode-flat"><div class="viewport"><div class="stage"></div></div><div class="hud dist"><div class="b">2.3 mi</div><div class="s">next turn</div></div><div class="hud compass"><b>N</b></div></div></div></div>
   </div>
 
   <div class="cards3" style="margin-top:1rem">
@@ -449,9 +455,9 @@
   const tpl=document.getElementById('mapsvg');
   document.querySelectorAll('.stage').forEach(s=>s.appendChild(tpl.content.cloneNode(true)));
 
-  function setMap(wrapEl,distEl,k){const C={neon:'t-neon game mode-tilt show-glow',metro:'t-metro gtav mode-flat',frontier:'t-frontier vintage mode-flat show-contour'}[k]||'t-neon game mode-tilt show-glow';if(wrapEl)wrapEl.className='wrapm '+C;}
+  function setMap(wrapEl,distEl,k){const C={neon:'t-neon game mode-tilt show-glow',metro:'t-metro gtav mode-flat',frontier:'t-frontier vintage mode-flat show-contour',vice:'t-vice gtav mode-flat',vicenight:'t-vicenight gtav mode-flat'}[k]||'t-metro gtav mode-flat';if(wrapEl)wrapEl.className='wrapm '+C;}
   const heroWrap=document.getElementById('heroWrap'),heroDist=document.getElementById('heroDist');
-  const HD={neon:'1.6 mi',metro:'1.04 km',frontier:'0.7 mi'};
+  const HD={neon:'1.6 mi',metro:'1.04 km',frontier:'0.7 mi',vice:'0.9 mi'};
   document.getElementById('heroSw').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;setMap(heroWrap,null,b.dataset.k);heroDist.textContent=HD[b.dataset.k]||'';document.querySelectorAll('#heroSw button').forEach(x=>x.classList.toggle('active',x===b));});
 
   /* ===== real / synthetic MapLibre map ===== */
