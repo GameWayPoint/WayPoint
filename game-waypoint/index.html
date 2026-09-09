@@ -404,9 +404,9 @@
   <div class="map-top">
     <div class="searchbar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="searchInput" placeholder="Search Game Waypoint"></div>
     <button class="pillbtn" id="dirToggle"><svg viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-8-8-2Z"/></svg>Directions</button>
-    <button class="pillbtn" id="poiToggle"><svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Places</button>
+    <button class="pillbtn on" id="poiToggle"><svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Places</button>
   </div>
-  <div class="poipanel" id="poiPanel" hidden><div class="poihead">Show on map</div><div id="poiList"></div></div>
+  <div class="poipanel" id="poiPanel"><div class="poihead">Show on map</div><div id="poiList"></div></div>
   <div class="dirpanel" id="dirPanel" hidden>
     <div class="dirrow"><span class="dot o"></span><input id="fromInput" value="Your location"></div>
     <div class="dirrow"><span class="dot d"></span><input id="destInput" placeholder="Type a place, or tap the map"></div>
@@ -666,7 +666,7 @@
   function ensureOrigin(){if(originMk||!gwMap)return;const el=document.createElement('div');el.className='gworigin';el.innerHTML=originSVG();originMk=new maplibregl.Marker({element:el,rotationAlignment:'map'}).setLngLat(userLL||ORIGIN).addTo(gwMap);}
   function onPos(pos){userLL=[pos.coords.longitude,pos.coords.latitude];if(!gwMap)return;ensureOrigin();originMk.setLngLat(userLL);const h=pos.coords.heading;if(h!=null&&!isNaN(h)){try{originMk.setRotation(h);}catch(e){}}}
   function locateUser(fly){if(!navigator.geolocation||!gwMap)return;navigator.geolocation.getCurrentPosition(function(pos){onPos(pos);if(fly)gwMap.easeTo({center:userLL,zoom:15});},function(){},{enableHighAccuracy:true,timeout:8000,maximumAge:15000});if(!geoWatch){try{geoWatch=navigator.geolocation.watchPosition(onPos,function(){},{enableHighAccuracy:true,maximumAge:5000});}catch(e){}}}
-  function afterLoad(){const t=MT[curKey];if(synthActive){recolorReal(t);setFontClass();addStreetLabels(t);gwMap.on('zoom',updateStreetVis);}ensureRoute(t);addMarkers(t);ensureOrigin();if(!synthActive){locateUser(true);setupPOI();}gwMap.on('click',e=>{if(dirMode)setDestination(e.lngLat);});}
+  function afterLoad(){const t=MT[curKey];if(synthActive){recolorReal(t);setFontClass();addStreetLabels(t);gwMap.on('zoom',updateStreetVis);}ensureRoute(t);addMarkers(t);ensureOrigin();buildPOIPanel();if(!synthActive){locateUser(true);setupPOI();}try{gwMap.doubleClickZoom.disable();}catch(e){}gwMap.on('click',e=>{if(dirMode)setDestination(e.lngLat);});gwMap.on('dblclick',e=>{if(e.originalEvent&&e.originalEvent.preventDefault)e.originalEvent.preventDefault();setDestination(e.lngLat);});}
 
   function haversine(a,b){const R=6371,dLat=(b[1]-a[1])*Math.PI/180,dLng=(b[0]-a[0])*Math.PI/180,la1=a[1]*Math.PI/180,la2=b[1]*Math.PI/180;const x=Math.sin(dLat/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLng/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
   function fitRoute(a,b){try{const bb=new maplibregl.LngLatBounds(a,a);bb.extend(b);gwMap.fitBounds(bb,{padding:70,maxZoom:15,duration:800});}catch(e){}}
