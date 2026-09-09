@@ -75,8 +75,9 @@
   .mode-tilt .stage{transform:rotateX(48deg) scale(1.14) translateY(-1%)}
   .mode-flat .stage{transform:none}
   .stage svg{width:100%;height:100%;display:block}
-  .land{fill:var(--land)}.water{fill:var(--water)}.grassf{fill:var(--greenm)}
+  .land{fill:var(--land)}.water{fill:var(--water)}.grassf{fill:var(--greenm)}.grassf2{fill:var(--greenm);opacity:.5}
   .bldg{fill:var(--building);stroke:var(--bstroke);stroke-width:1.4}
+  .blocks .bldg{stroke-width:.7;stroke-opacity:.8}
   .road{stroke:var(--road-minor);fill:none;stroke-linecap:round;stroke-linejoin:round}
   .hwy{stroke:var(--road-major);fill:none;stroke-linecap:round;stroke-linejoin:round}
   .contour{stroke:var(--contour);fill:none;opacity:.5;stroke-width:1.4;display:none}
@@ -127,15 +128,24 @@
   .mhud{position:absolute;top:11px;left:11px;background:var(--hudbg);color:var(--hud);border-radius:9px;padding:5px 9px;font-weight:700;font-size:12px;line-height:1.1;backdrop-filter:blur(6px)}
   .mhud small{display:block;font-size:7px;letter-spacing:.14em;opacity:.75;margin-top:1px}
   .mcompass{position:absolute;bottom:11px;right:11px;width:24px;height:24px;border-radius:50%;background:var(--hudbg);color:var(--hud);display:grid;place-items:center;font-size:10px;font-weight:700}
-  .cpwrap{background:linear-gradient(180deg,#1c1c20,#0b0b0d);border-radius:20px;padding:16px;border:1px solid var(--line-2);box-shadow:0 30px 70px rgba(0,0,0,.55)}
-  .cpscreen{position:relative;display:flex;aspect-ratio:16/9;border-radius:10px;overflow:hidden}
-  .cpbanner{width:36%;height:100%;background:#12121a;color:#fff;padding:14px 13px;display:flex;flex-direction:column;gap:5px;font-family:'GTAArtDeco','Anton',sans-serif}
-  .cpbanner .cpdir{font-size:30px;line-height:1;color:#ff4d9e}
-  .cpbanner .cprd{font-weight:700;font-size:13px;letter-spacing:.02em;line-height:1.15}
-  .cpbanner .cpdist{font-size:22px;font-weight:800}
-  .cpbanner .cpeta{margin-top:auto;font-size:10px;opacity:.7;font-family:var(--body)}
+  /* car dashboard scene */
+  .carscene{position:relative;border-radius:16px;overflow:hidden;padding:30px 26px 86px;background:radial-gradient(130% 90% at 50% -12%,#262a33 0%,#171a21 42%,#0b0c10 100%);border:1px solid var(--line-2);box-shadow:0 34px 80px rgba(0,0,0,.6)}
+  .carscene::before{content:"";position:absolute;inset:0 0 auto 0;height:46px;background:linear-gradient(180deg,rgba(120,140,190,.16),transparent);pointer-events:none}
+  .cs-vents{display:flex;gap:12px;justify-content:center;margin-bottom:16px;position:relative;z-index:2}
+  .cs-vents span{height:7px;width:58px;border-radius:7px;background:linear-gradient(90deg,#31353f,#0e1015 60%);box-shadow:inset 0 1px 1px rgba(255,255,255,.08),inset 0 -1px 1px rgba(0,0,0,.5)}
+  .cs-unit{position:relative;z-index:2;border-radius:15px;padding:11px;background:linear-gradient(180deg,#0a0b0e,#000);box-shadow:0 16px 30px rgba(0,0,0,.62),0 0 0 1px #2b2f38,inset 0 1px 0 rgba(255,255,255,.06);transform:perspective(1100px) rotateX(5deg)}
+  .cpscreen{position:relative;display:flex;aspect-ratio:16/9;border-radius:9px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+  .cpbanner{width:37%;height:100%;background:linear-gradient(180deg,#14141d,#0e0e15);color:#fff;padding:11px 12px;display:flex;flex-direction:column;gap:4px}
+  .cpbanner .cptop{display:flex;justify-content:space-between;align-items:center;gap:6px;white-space:nowrap;font-family:var(--mono);font-size:7.5px;letter-spacing:.08em;text-transform:uppercase;opacity:.6;margin-bottom:2px}
+  .cpbanner .cpdir{font-size:30px;line-height:1;color:#c07bff}
+  .cpbanner .cprd{font-weight:700;font-size:13px;letter-spacing:.02em;line-height:1.15;font-family:'Pricedown','Anton',sans-serif}
+  .cpbanner .cpdist{font-size:23px;font-weight:800;font-family:'Pricedown','Anton',sans-serif}
+  .cpbanner .cpeta{margin-top:auto;font-size:10px;opacity:.72;font-family:var(--body)}
   .cpscreen .mmap{flex:1;height:100%;aspect-ratio:auto;border-radius:0;box-shadow:none}
-  .cpcap{text-align:center;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-top:.7rem}
+  .cs-wheel{position:absolute;left:50%;bottom:-128px;width:340px;max-width:84%;aspect-ratio:1.3/1;transform:translateX(-50%);border-radius:50%;border:20px solid #2b2f39;background:radial-gradient(circle at 50% 20%,#34394494,#0c0d11 74%);box-shadow:inset 0 6px 14px rgba(0,0,0,.55),inset 0 2px 0 rgba(255,255,255,.09),0 -4px 14px rgba(0,0,0,.5);z-index:1}
+  .cs-wheel::before{content:"";position:absolute;left:50%;top:-20px;width:calc(100% + 40px);height:60px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(60% 100% at 50% 0,rgba(150,168,210,.14),transparent 70%);pointer-events:none}
+  .cs-wheel::after{content:"";position:absolute;left:50%;top:34%;width:86px;height:46px;transform:translateX(-50%);border-radius:11px;background:linear-gradient(180deg,#2c313b,#101218);box-shadow:0 2px 8px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.08)}
+  .cpcap{text-align:center;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-top:.9rem}
   .cat-food{--cat:#ff6a3d}.cat-shop{--cat:#3ddc84}.cat-fuel{--cat:#38b6ff}.cat-bar{--cat:#c65cff}.cat-hotel{--cat:#ffb020}
 
   .sw{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:1rem auto 0;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:5px;width:fit-content;max-width:100%}
@@ -300,12 +310,12 @@
   <div class="wrap nav-in">
     <div class="logo" data-nav="home"><svg class="pin" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-6.6 7-12a7 7 0 1 0-14 0c0 5.4 7 12 7 12Z" fill="url(#lg)" stroke="#fff" stroke-width="1.1" stroke-opacity=".22"/><circle cx="12" cy="10" r="2.6" fill="#08090d"/><defs><linearGradient id="lg" x1="5" y1="3" x2="19" y2="21"><stop stop-color="#ff3d8a"/><stop offset="1" stop-color="#9a6bff"/></linearGradient></defs></svg>Game Waypoint</div>
     <nav class="nav-links">
-      <a data-nav="home">Home</a><a data-nav="features">Features</a><a data-nav="maps">Maps</a><a data-nav="blog">Blog</a>
+      <a data-nav="home">Home</a><a data-nav="features">Features</a><a data-nav="maps">Maps</a>
     </nav>
     <a class="asbadge sm nav-cta" data-nav="home"><svg class="applelogo" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 12.8c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.8-3.5.8-.7 0-1.8-.8-3-.8-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.7 1.1 8.9.7 1.1 1.6 2.3 2.7 2.2 1.1 0 1.5-.7 2.8-.7s1.6.7 2.8.7c1.2 0 1.9-1.1 2.6-2.1.8-1.2 1.2-2.3 1.2-2.4-.1 0-2.3-.9-2.3-3.5zM15.3 5.8c.6-.7 1-1.7.9-2.8-.9 0-1.9.6-2.5 1.3-.5.6-1 1.6-.9 2.6 1 .1 1.9-.5 2.5-1.1z"/></svg><span class="astxt"><small>Coming soon on the</small><b>App Store</b></span></a>
     <button class="burger" id="burger" aria-label="Menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
   </div>
-  <div class="mobile-menu" id="mobilemenu"><div class="wrap"><a data-nav="home">Home</a><a data-nav="features">Features</a><a data-nav="maps">Maps</a><a data-nav="blog">Blog</a></div></div>
+  <div class="mobile-menu" id="mobilemenu"><div class="wrap"><a data-nav="home">Home</a><a data-nav="features">Features</a><a data-nav="maps">Maps</a></div></div>
 </header>
 
 <!-- ===== HOME ===== -->
@@ -333,7 +343,7 @@
     </div>
   </div>
 </section>
-<div class="trust"><div class="wrap trust-in"><span>◆ <b>Real navigation</b></span><span>◆ <b>GTA V style</b></span><span>◆ <b>Apple CarPlay</b></span><span>◆ <b>No account</b></span><span>◆ <b>Privacy-first</b></span></div></div>
+<div class="trust"><div class="wrap trust-in"><span>◆ <b>For Apple CarPlay</b></span></div></div>
 
 <section class="pad"><div class="wrap">
   <div class="shead center reveal"><span class="eyebrow">Why Game Waypoint</span><h2>A real map app, in a world you love</h2></div>
@@ -351,15 +361,6 @@
     <div class="st reveal"><h3>Open Game Waypoint</h3><p>Your real map loads with your live position, ready to go.</p></div>
     <div class="st reveal"><h3>See the GTA V style</h3><p>Your real map transforms into a dark, GTA V-inspired look.</p></div>
     <div class="st reveal"><h3>Search or drive</h3><p>Get turn-by-turn directions for real — in style, on iPhone or CarPlay.</p></div>
-  </div>
-</div></section>
-
-<section class="pad" id="reviews"><div class="wrap">
-  <div class="shead center reveal"><span class="eyebrow">Reviews</span><h2>Built to be loved</h2><p>Game Waypoint launches soon. Real App Store reviews will appear here after launch.</p></div>
-  <div class="reviews">
-    <div class="rcard reveal"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.9 7.6.6-5.8 5 1.8 7.4L12 17.9 5.4 21.9l1.8-7.4-5.8-5 7.6-.6z"/></svg></div><p>Your review could be here — Game Waypoint hasn't launched yet.</p><div class="who"><div class="av"></div>Reserved for a real reviewer</div></div>
-    <div class="rcard reveal"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.9 7.6.6-5.8 5 1.8 7.4L12 17.9 5.4 21.9l1.8-7.4-5.8-5 7.6-.6z"/></svg></div><p>We'll show genuine App Store reviews here after launch — no fake quotes.</p><div class="who"><div class="av"></div>Reserved for a real reviewer</div></div>
-    <div class="rcard reveal"><div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l3 6.9 7.6.6-5.8 5 1.8 7.4L12 17.9 5.4 21.9l1.8-7.4-5.8-5 7.6-.6z"/></svg></div><p>Check back at launch to see what players really think.</p><div class="who"><div class="av"></div>Reserved for a real reviewer</div></div>
   </div>
 </div></section>
 
@@ -400,7 +401,14 @@
   <div class="frow reveal">
     <div class="fcopy"><span class="eyebrow">In the car</span><h2>Made for Apple CarPlay</h2><p>Big, glanceable and safe — your styled map right on the dashboard, next turn front and center.</p>
       <ul class="fchecks"><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Full-screen map on the car display</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Distraction-light, driver-safe UI</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Search, routes &amp; voice in the car</li></ul></div>
-    <div class="fart"><div class="cpwrap"><div class="cpscreen"><div class="cpbanner"><div class="cpdir">&#8598;</div><div class="cprd">Vinewood Blvd</div><div class="cpdist">400 m</div><div class="cpeta">12 min · 3.4 km · ETA 14:22</div></div><div class="mmap wide" data-mock="vicenight"></div></div><div class="cpcap">Apple CarPlay preview</div></div></div>
+    <div class="fart"><div class="carscene">
+      <div class="cs-vents"><span></span><span></span><span></span></div>
+      <div class="cs-unit"><div class="cpscreen">
+        <div class="cpbanner"><div class="cptop"><span>CarPlay</span><span>14:22</span></div><div class="cpdir">&#8598;</div><div class="cprd">Vinewood Blvd</div><div class="cpdist">400 m</div><div class="cpeta">12 min · 3.4 km · ETA 14:22</div></div>
+        <div class="mmap wide" data-mock="metro"></div>
+      </div></div>
+      <div class="cs-wheel"></div>
+    </div><div class="cpcap">Apple CarPlay — GTA V style</div></div>
   </div>
 
   <div class="cards3" style="margin-top:1rem">
@@ -447,26 +455,11 @@
 </div>
 </main>
 
-<!-- ===== BLOG ===== -->
-<main data-viewpage="blog" hidden>
-<section class="pad"><div class="wrap">
-  <div class="shead reveal"><span class="eyebrow">Blog</span><h2>From the road</h2><p>Behind the scenes on building Game Waypoint. First posts drop at launch.</p></div>
-  <div class="blog-grid">
-    <article class="post reveal"><div class="cover" style="--c1:#2a1030;--c2:#0e1730"><span class="tagp">Coming soon</span></div><div class="body"><div class="cat">Design</div><h3>Designing the GTA V look</h3><p>How we turned real streets into a dark, minimal open-world map — without copying any game.</p></div></article>
-    <article class="post reveal"><div class="cover" style="--c1:#101c14;--c2:#241a0c"><span class="tagp">Coming soon</span></div><div class="body"><div class="cat">Engineering</div><h3>Bringing game maps to CarPlay</h3><p>What it takes to put a styled navigation map safely on your car's screen.</p></div></article>
-    <article class="post reveal"><div class="cover" style="--c1:#1a1030;--c2:#301020"><span class="tagp">Coming soon</span></div><div class="body"><div class="cat">Guides</div><h3>5 drives that feel like a video game</h3><p>Everyday routes that hit different once your map looks like an open world.</p></div></article>
-    <article class="post reveal"><div class="cover" style="--c1:#0e1c2a;--c2:#101018"><span class="tagp">Coming soon</span></div><div class="body"><div class="cat">Design</div><h3>Drawing original map icons</h3><p>Why we hand-drew every place icon instead of borrowing from the games.</p></div></article>
-    <article class="post reveal"><div class="cover" style="--c1:#231a0c;--c2:#12140f"><span class="tagp">Coming soon</span></div><div class="body"><div class="cat">Product</div><h3>How pricing works</h3><p>Free to explore, Premium to drive — the thinking behind it.</p></div></article>
-    <article class="post reveal"><div class="cover" style="--c1:#141c10;--c2:#0e1420"><span class="tagp">Coming soon</span></div><div class="body"><div class="cat">Behind the scenes</div><h3>Turning OpenStreetMap into a game map</h3><p>The tech that restyles real streets in real time.</p></div></article>
-  </div>
-</div></section>
-</main>
-
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="wrap foot">
     <div class="brand"><div class="logo" data-nav="home"><svg class="pin" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-6.6 7-12a7 7 0 1 0-14 0c0 5.4 7 12 7 12Z" fill="url(#lg2)" stroke="#fff" stroke-width="1.1" stroke-opacity=".22"/><circle cx="12" cy="10" r="2.6" fill="#08090d"/><defs><linearGradient id="lg2" x1="5" y1="3" x2="19" y2="21"><stop stop-color="#ff3d8a"/><stop offset="1" stop-color="#9a6bff"/></linearGradient></defs></svg>Game Waypoint</div><p>Real-world navigation, reimagined as your favorite game worlds. Coming soon to the App Store.</p></div>
-    <div><h5>Product</h5><ul><li><a data-nav="features">Features</a></li><li><a data-nav="maps">Maps</a></li><li><a data-nav="blog">Blog</a></li></ul></div>
+    <div><h5>Product</h5><ul><li><a data-nav="features">Features</a></li><li><a data-nav="maps">Maps</a></li></ul></div>
     <div><h5>Support</h5><ul><li><a href="mailto:kontakt@odys.no">Contact Us</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li></ul></div>
     <div><h5>Social</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">Discord</a></li></ul></div>
   </div>
@@ -505,15 +498,64 @@
   };
   function mmDot(c){return '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="'+c+'" stroke="'+darken(c,0.58)+'" stroke-width="2"/></svg>';}
   function mmMapSVG(wide){
-    const W=wide?640:320,H=wide?360:560;let seed=wide?4242:1337;function rnd(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;}
-    let bld='';for(let i=0;i<(wide?46:36);i++){const bx=rnd()*W,by=rnd()*H,bw=9+rnd()*24,bh=9+rnd()*22;bld+='<rect class="bldg" x="'+bx.toFixed(0)+'" y="'+by.toFixed(0)+'" width="'+bw.toFixed(0)+'" height="'+bh.toFixed(0)+'" rx="2"/>';}
-    let grid='';for(let gy=H*0.17;gy<H;gy+=H*0.165){grid+='<path class="road" d="M0,'+gy.toFixed(0)+' H'+W+'" stroke-width="5"/>';}for(let gx=W*0.17;gx<W;gx+=W*0.165){grid+='<path class="road" d="M'+gx.toFixed(0)+',0 V'+H+'" stroke-width="5"/>';}
-    const river=wide?'<path class="water" d="M0,0 L120,0 L156,360 L0,360 Z"/>':'<path class="water" d="M320,0 L320,250 L262,266 L246,66 L282,0 Z"/>';
-    const park=wide?'<ellipse class="grassf" cx="470" cy="70" rx="120" ry="60"/>':'<ellipse class="grassf" cx="66" cy="120" rx="78" ry="50"/>';
-    const hwy=wide?'<path class="hwy" d="M-20,120 C180,150 380,250 660,300" stroke-width="22"/>':'<path class="hwy" d="M-20,90 C130,130 200,320 360,384" stroke-width="20"/>';
-    const main=wide?'<path class="road" d="M300,360 L360,180 L440,120" stroke-width="12"/>':'<path class="road" d="M160,560 L160,300 L206,244" stroke-width="12"/>';
-    const routeD=wide?'M400,340 L400,205 Q400,168 474,150':'M160,486 L160,320 Q160,282 196,258';
-    return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid slice"><rect class="land" x="0" y="0" width="'+W+'" height="'+H+'"/>'+river+park+grid+bld+main+hwy+'<path class="route-glow" d="'+routeD+'" stroke-width="'+(wide?11:12)+'"/><path class="route" d="'+routeD+'" stroke-width="6"/></svg>';
+    const W=wide?640:320,H=wide?360:600;let seed=wide?4242:1337;
+    const rnd=function(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};
+    const R=function(a,b){return a+(b-a)*rnd();};
+    mmMapSVG._n=(mmMapSVG._n||0)+1;const uid='mm'+mmMapSVG._n;
+    // ---- coastline (sea on one side) ----
+    const coast=function(t){return wide?H*(0.2+0.06*Math.sin(t*6.3+1)):W*(0.74+0.05*Math.sin(t*6.0+0.6));};
+    let cpts=[],i;
+    if(wide){for(i=0;i<=28;i++){cpts.push((W*i/28).toFixed(1)+','+coast(i/28).toFixed(1));}}
+    else{for(i=0;i<=28;i++){cpts.push(coast(i/28).toFixed(1)+','+(H*i/28).toFixed(1));}}
+    const water=wide
+      ? '<path class="water" d="M0,0 L'+cpts.join(' L')+' L'+W+',0 Z"/>'
+      : '<path class="water" d="M'+cpts.join(' L')+' L'+W+','+H+' L'+W+',0 Z"/>';
+    const land=wide
+      ? 'M0,'+H+' L'+cpts.join(' L')+' L'+W+','+H+' Z'
+      : 'M0,0 L'+cpts.join(' L')+' L0,'+H+' Z';
+    const onLand=function(px,py){return wide?(py>coast(px/W)+1):(px<coast(py/H)-1);};
+    // ---- street network (irregular grid) ----
+    let xs=[],ys=[],gx=R(0.08,0.12)*W,gy=R(0.05,0.09)*H;
+    while(gx<W*0.99){xs.push(gx);gx+=R(0.14,0.2)*W;}
+    while(gy<H*0.99){ys.push(gy);gy+=R(0.11,0.16)*H;}
+    const artx=xs[Math.max(1,Math.floor(xs.length*0.55))],arty=ys[Math.max(1,Math.floor(ys.length*0.42))];
+    // ---- park ----
+    const pk=wide?{x:W*0.6,y:H*0.66,rx:80,ry:48}:{x:W*0.3,y:H*0.27,rx:62,ry:52};
+    const inPark=function(px,py){const a=(px-pk.x)/pk.rx,b=(py-pk.y)/pk.ry;return a*a+b*b<1.05;};
+    // ---- roads ----
+    let roads='';
+    ys.forEach(function(y){if(y!==arty)roads+='<path class="road" d="M0,'+y.toFixed(0)+' H'+W+'" stroke-width="3"/>';});
+    xs.forEach(function(x){if(x!==artx)roads+='<path class="road" d="M'+x.toFixed(0)+',0 V'+H+'" stroke-width="3"/>';});
+    let arts='<path class="hwy" d="M0,'+arty.toFixed(0)+' H'+W+'" stroke-width="6.5"/><path class="hwy" d="M'+artx.toFixed(0)+',0 V'+H+'" stroke-width="6.5"/>';
+    arts+= wide
+      ? '<path class="hwy" d="M-20,'+(H*0.16).toFixed(0)+' C'+(W*0.3).toFixed(0)+','+(H*0.35).toFixed(0)+' '+(W*0.55).toFixed(0)+','+(H*0.5).toFixed(0)+' '+(W+20)+','+(H*0.7).toFixed(0)+'" stroke-width="9"/>'
+      : '<path class="hwy" d="M'+(W*0.04).toFixed(0)+',-12 C'+(W*0.22).toFixed(0)+','+(H*0.26).toFixed(0)+' '+(W*0.6).toFixed(0)+','+(H*0.42).toFixed(0)+' '+(W*0.52).toFixed(0)+','+(H+12)+'" stroke-width="9"/>';
+    // ---- buildings packed into blocks ----
+    let bld='<g class="blocks">';
+    for(i=0;i<xs.length-1;i++){for(let j=0;j<ys.length-1;j++){
+      const x0=xs[i],x1=xs[i+1],y0=ys[j],y1=ys[j+1],cx=(x0+x1)/2,cy=(y0+y1)/2;
+      if(!onLand(cx,cy)||inPark(cx,cy))continue;
+      const m=3.2,bx0=x0+m,by0=y0+m,bx1=x1-m,by1=y1-m;
+      if(bx1-bx0<9||by1-by0<9||rnd()<0.08)continue;
+      const cols=Math.min(3,Math.max(1,Math.round((bx1-bx0)/R(20,28)))),rows=Math.min(3,Math.max(1,Math.round((by1-by0)/R(20,28))));
+      const cw=(bx1-bx0)/cols,ch=(by1-by0)/rows,g=1.7;
+      for(let c=0;c<cols;c++)for(let r=0;r<rows;r++){
+        if(rnd()<0.14)continue;
+        const rx=bx0+c*cw+g/2,ry=by0+r*ch+g/2,op=(0.8+rnd()*0.2).toFixed(2);
+        bld+='<rect class="bldg" x="'+rx.toFixed(1)+'" y="'+ry.toFixed(1)+'" width="'+(cw-g).toFixed(1)+'" height="'+(ch-g).toFixed(1)+'" rx="1.3" fill-opacity="'+op+'"/>';
+      }
+    }}
+    bld+='</g>';
+    const parkEl='<ellipse class="grassf" cx="'+pk.x.toFixed(0)+'" cy="'+pk.y.toFixed(0)+'" rx="'+pk.rx+'" ry="'+pk.ry+'"/><ellipse class="grassf2" cx="'+(pk.x+pk.rx*0.25).toFixed(0)+'" cy="'+(pk.y-pk.ry*0.2).toFixed(0)+'" rx="'+(pk.rx*0.42).toFixed(0)+'" ry="'+(pk.ry*0.4).toFixed(0)+'"/>';
+    const routeD=wide
+      ? 'M'+(W*0.62).toFixed(0)+','+(H*0.84).toFixed(0)+' L'+(W*0.62).toFixed(0)+','+(H*0.52).toFixed(0)+' Q'+(W*0.62).toFixed(0)+','+(H*0.46).toFixed(0)+' '+(W*0.68).toFixed(0)+','+(H*0.46).toFixed(0)+' L'+(W*0.74).toFixed(0)+','+(H*0.44).toFixed(0)
+      : 'M'+(W*0.5).toFixed(0)+','+(H*0.85).toFixed(0)+' L'+(W*0.5).toFixed(0)+','+(H*0.56).toFixed(0)+' Q'+(W*0.5).toFixed(0)+','+(H*0.5).toFixed(0)+' '+(W*0.56).toFixed(0)+','+(H*0.5).toFixed(0)+' L'+(W*0.61).toFixed(0)+','+(H*0.46).toFixed(0);
+    const rw=wide?9:10;
+    return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid slice">'
+      +'<defs><clipPath id="'+uid+'"><path d="'+land+'"/></clipPath></defs>'
+      +'<rect class="land" x="0" y="0" width="'+W+'" height="'+H+'"/>'+water
+      +'<g clip-path="url(#'+uid+')">'+parkEl+roads+arts+bld+'</g>'
+      +'<path class="route-glow" d="'+routeD+'" stroke-width="'+(rw+5)+'"/><path class="route" d="'+routeD+'" stroke-width="'+rw+'"/></svg>';
   }
   function buildMockup(el,style,opts){
     opts=opts||{};const vice=style.indexOf('vice')===0;
