@@ -753,7 +753,7 @@
       bnd:'#5a5a5a',lr:'#ffffff',lcity:'#ffffff',ls:'#ffffff',lw:'#ffffff',halo:'#3a3a3a',hw:1,font:'Minecraft',pk:'#b2b2b2',sand:'#d2c78a',d3:false}
   };
   function realStyle(key){
-    const p=RPAL[key]||RPAL.metro;const hw=(p.hw==null?1:p.hw);const tf=(p.font==='Minecraft')?['Minecraft','Pricedown']:[p.font];
+    const p=RPAL[key]||RPAL.metro;const hw=(p.hw==null?1:p.hw);const tf=[p.font];
     const W=(...s)=>['interpolate',['linear'],['zoom'],...s];
     const rd=(id,filt,color,width,extra)=>Object.assign({id:id,type:'line',source:'openmaptiles','source-layer':'transportation',filter:filt,layout:{'line-cap':'round','line-join':'round'},paint:Object.assign({'line-color':color,'line-width':width},extra||{})});
     const layers=[
