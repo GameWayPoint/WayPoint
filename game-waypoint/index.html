@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#08090d">
 <title>Game Waypoint</title>
 <meta name="description" content="Game Waypoint turns real-world maps into the look of your favorite open-world games — real streets, real GPS, real turn-by-turn, on iPhone and Apple CarPlay.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -205,6 +211,10 @@
   .cta-band::before{content:"";position:absolute;inset:auto -10% -60% -10%;height:300px;background:radial-gradient(50% 100% at 50% 100%,rgba(255,61,138,.22),transparent 70%)}
   .cta-band h2{position:relative;font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;margin-bottom:.6rem}
   .cta-band p{position:relative;color:var(--ink-soft);margin:0 0 1.5rem}
+  .ctamail{position:relative;margin:1.2rem 0 0!important;font-size:.9rem}
+  .footmail{margin-top:.65rem;font-size:.85rem;color:var(--ink-soft);word-break:break-word}
+  .footmail a,.ctamail a,.faq .a a{color:var(--pink);text-decoration:none}
+  .footmail a:hover,.ctamail a:hover,.faq .a a:hover{text-decoration:underline}
 
   /* ===== real MapLibre ===== */
   .maplibregl-map{position:relative;overflow:hidden}
@@ -236,8 +246,6 @@
   .dmini:hover{color:#fff;border-color:var(--line-2)}
   .unittog{margin-left:auto;min-width:46px;text-align:center;font-family:var(--mono);letter-spacing:.06em}
   .dirrow input.pintarget{border-color:var(--pink);box-shadow:0 0 0 2px rgba(255,61,138,.22)}
-  .gwstart{width:30px;height:40px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.55))}
-  .gwstart svg{width:100%;height:100%;display:block}
   .tripinfo{position:absolute;z-index:8;left:50%;bottom:72px;transform:translateX(-50%);display:none;align-items:center;gap:.55rem;background:rgba(12,14,20,.92);border:1px solid var(--line-2);border-radius:12px;padding:.5rem .85rem;color:#fff;backdrop-filter:blur(10px);box-shadow:0 10px 30px rgba(0,0,0,.55);white-space:nowrap;font-size:.92rem;max-width:calc(100% - 32px)}
   .tripinfo.on{display:flex}
   .tripinfo b{font-weight:700}
@@ -250,6 +258,17 @@
   .stylebar button.active{background:#fff;color:#0a0b10}
   .mapctrls{position:absolute;z-index:8;right:16px;bottom:18px;display:flex;flex-direction:column;gap:6px}
   .mapctrls button{width:40px;height:40px;border-radius:11px;background:var(--card);border:1px solid var(--line-2);color:var(--ink);font-size:1.2rem;cursor:pointer;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+  @media(max-width:600px){
+    .nav-cta{display:none}
+    .map-top{gap:.4rem;top:12px;left:12px;right:12px}
+    .pillbtn{padding:.68rem}.pillbtn .lbl{display:none}
+    .searchbar{padding:.6rem .75rem}
+    .dirpanel{top:68px;left:12px;padding:.85rem}
+    .poipanel{top:68px;right:12px}
+    .tripinfo{bottom:64px;font-size:.85rem;padding:.45rem .7rem}
+    .stylebar{max-width:calc(100% - 20px)}
+    .mapfull{height:78vh;min-height:460px}
+  }
   .mapnote{position:absolute;z-index:7;top:76px;right:16px;background:rgba(14,14,17,.66);border:1px solid rgba(255,255,255,.14);color:#c7d2df;font-size:.66rem;padding:5px 9px;border-radius:8px;backdrop-filter:blur(6px);pointer-events:none}
   .mapfallback{position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:#0c0c0e;padding:1.5rem;text-align:center}
   .mapfallback[hidden]{display:none}
@@ -318,6 +337,8 @@
   .foot .brand p{color:var(--ink-soft);font-size:.9rem;max-width:34ch;margin:.8rem 0 0}
   .disclaimer{border-top:1px solid var(--line);padding:1.4rem 0 2.4rem;color:var(--ink-faint);font-size:.78rem;line-height:1.6}
 </style>
+</head>
+<body>
 
 <header class="nav">
   <div class="wrap nav-in">
@@ -385,10 +406,11 @@
     <details><summary>Does it work in Apple CarPlay?</summary><div class="a">That's the goal — a styled map on your car's screen. CarPlay navigation requires Apple's approval and a Premium subscription.</div></details>
     <details><summary>What does it cost?</summary><div class="a">Exploring and searching is free. Premium unlocks Driving Mode for about $4.99/month, localized to your region.</div></details>
     <details><summary>Do you track me?</summary><div class="a">No account required, and your location stays on your device. Privacy-first by design.</div></details>
+    <details><summary>How do I get in touch?</summary><div class="a">We'd love to hear from you — email us any time at <a href="mailto:GameWaypointApp@gmail.com">GameWaypointApp@gmail.com</a> for support, feedback or press.</div></details>
   </div>
 </div></section>
 
-<section class="pad"><div class="wrap"><div class="cta-band reveal"><h2>Turn your city into a game world.</h2><p>Coming soon to the App Store for iPhone &amp; CarPlay.</p><a class="asbadge" data-nav="home"><svg class="applelogo" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 12.8c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.8-3.5.8-.7 0-1.8-.8-3-.8-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.7 1.1 8.9.7 1.1 1.6 2.3 2.7 2.2 1.1 0 1.5-.7 2.8-.7s1.6.7 2.8.7c1.2 0 1.9-1.1 2.6-2.1.8-1.2 1.2-2.3 1.2-2.4-.1 0-2.3-.9-2.3-3.5zM15.3 5.8c.6-.7 1-1.7.9-2.8-.9 0-1.9.6-2.5 1.3-.5.6-1 1.6-.9 2.6 1 .1 1.9-.5 2.5-1.1z"/></svg><span class="astxt"><small>Coming soon on the</small><b>App Store</b></span></a></div></div></section>
+<section class="pad"><div class="wrap"><div class="cta-band reveal"><h2>Turn your city into a game world.</h2><p>Coming soon to the App Store for iPhone &amp; CarPlay.</p><a class="asbadge" data-nav="home"><svg class="applelogo" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 12.8c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.8-3.5.8-.7 0-1.8-.8-3-.8-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.7 1.1 8.9.7 1.1 1.6 2.3 2.7 2.2 1.1 0 1.5-.7 2.8-.7s1.6.7 2.8.7c1.2 0 1.9-1.1 2.6-2.1.8-1.2 1.2-2.3 1.2-2.4-.1 0-2.3-.9-2.3-3.5zM15.3 5.8c.6-.7 1-1.7.9-2.8-.9 0-1.9.6-2.5 1.3-.5.6-1 1.6-.9 2.6 1 .1 1.9-.5 2.5-1.1z"/></svg><span class="astxt"><small>Coming soon on the</small><b>App Store</b></span></a><p class="ctamail">Questions or feedback? <a href="mailto:GameWaypointApp@gmail.com">GameWaypointApp@gmail.com</a></p></div></div></section>
 </main>
 
 <!-- ===== FEATURES ===== -->
@@ -442,8 +464,8 @@
   <div id="gwmap" class="gwmap"></div>
   <div class="map-top">
     <div class="searchbar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="searchInput" placeholder="Search Game Waypoint"></div>
-    <button class="pillbtn" id="dirToggle"><svg viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-8-8-2Z"/></svg>Directions</button>
-    <button class="pillbtn on" id="poiToggle"><svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Places</button>
+    <button class="pillbtn" id="dirToggle" aria-label="Directions"><svg viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-8-8-2Z"/></svg><span class="lbl">Directions</span></button>
+    <button class="pillbtn on" id="poiToggle" aria-label="Places"><svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span class="lbl">Places</span></button>
   </div>
   <div class="poipanel" id="poiPanel"><div class="poihead">Show on map</div><div id="poiList"></div></div>
   <div class="dirpanel" id="dirPanel" hidden>
@@ -472,10 +494,10 @@
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="wrap foot">
-    <div class="brand"><div class="logo" data-nav="home"><svg class="pin" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-6.6 7-12a7 7 0 1 0-14 0c0 5.4 7 12 7 12Z" fill="url(#lg2)" stroke="#fff" stroke-width="1.1" stroke-opacity=".22"/><circle cx="12" cy="10" r="2.6" fill="#08090d"/><defs><linearGradient id="lg2" x1="5" y1="3" x2="19" y2="21"><stop stop-color="#ff3d8a"/><stop offset="1" stop-color="#9a6bff"/></linearGradient></defs></svg>Game Waypoint</div><p>Real-world navigation, reimagined as your favorite game worlds. Coming soon to the App Store.</p></div>
+    <div class="brand"><div class="logo" data-nav="home"><svg class="pin" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-6.6 7-12a7 7 0 1 0-14 0c0 5.4 7 12 7 12Z" fill="url(#lg2)" stroke="#fff" stroke-width="1.1" stroke-opacity=".22"/><circle cx="12" cy="10" r="2.6" fill="#08090d"/><defs><linearGradient id="lg2" x1="5" y1="3" x2="19" y2="21"><stop stop-color="#ff3d8a"/><stop offset="1" stop-color="#9a6bff"/></linearGradient></defs></svg>Game Waypoint</div><p>Real-world navigation, reimagined as your favorite game worlds. Coming soon to the App Store.</p><p class="footmail">Contact: <a href="mailto:GameWaypointApp@gmail.com">GameWaypointApp@gmail.com</a></p></div>
     <div><h5>Product</h5><ul><li><a data-nav="features">Features</a></li><li><a data-nav="maps">Maps</a></li></ul></div>
-    <div><h5>Support</h5><ul><li><a href="mailto:kontakt@odys.no">Contact Us</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li></ul></div>
-    <div><h5>Social</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">Discord</a></li></ul></div>
+    <div><h5>Support</h5><ul><li><a href="mailto:GameWaypointApp@gmail.com">Contact Us</a></li><li><a href="mailto:GameWaypointApp@gmail.com">GameWaypointApp@gmail.com</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li></ul></div>
+    <div><h5>Social</h5><ul><li><a href="https://www.instagram.com/gamewaypointapp/" target="_blank" rel="noopener">Instagram</a></li><li><a href="#">TikTok</a></li></ul></div>
   </div>
   <div class="wrap"><p class="disclaimer">© 2026 Game Waypoint. Coming soon to the App Store. Game Waypoint is an independent app and is not affiliated with, endorsed by, sponsored by, or associated with any game or game publisher. All map styles and icons are original artwork created for Game Waypoint. Grand Theft Auto and GTA are trademarks of Take-Two Interactive and Rockstar Games; Red Dead Redemption is a trademark of Take-Two Interactive; Minecraft is a trademark of Mojang Studios / Microsoft. Style names reference these games only to describe their visual inspiration. Map data © OpenStreetMap contributors. Apple, iPhone and CarPlay are trademarks of Apple Inc.</p></div>
 </footer>
@@ -626,7 +648,6 @@
   const ORIGIN=[-118.30,34.045];
   let gwMap=null,gwStarted=false,curKey='metro',gwMarkers=[],originMk=null,destMk=null,destLL=null,dirMode=false,streetMks=[],synthActive=false,userLL=null,geoWatch=null,lastDest=null,lastDestLabel='',viceMode='day';
   let originLL=null,startMk=null,useMiles=false,pinTarget='to',lastRoute=null;
-  const STARTSVG='<svg viewBox="0 0 24 32"><path d="M12 1C6 1 2 5.4 2 11c0 7 10 20 10 20s10-13 10-20C22 5.4 18 1 12 1Z" fill="#25c268" stroke="#0b3a1e" stroke-width="1.5"/><circle cx="12" cy="11" r="4" fill="#0b3a1e"/></svg>';
   const DESTSVG='<svg viewBox="0 0 32 32"><g fill="#b14ff2" stroke="#12001f" stroke-width="1.1" stroke-linejoin="round"><path d="M16 2 L20.5 11 L11.5 11 Z"/><path d="M16 30 L20.5 21 L11.5 21 Z"/><path d="M2 16 L11 11.5 L11 20.5 Z"/><path d="M30 16 L21 11.5 L21 20.5 Z"/></g></svg>';
   function darken(hex,f){f=(f==null?0.6:f);try{const n=parseInt(hex.slice(1),16);const r=Math.round(((n>>16)&255)*f),g=Math.round(((n>>8)&255)*f),b=Math.round((n&255)*f);return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);}catch(e){return '#a02e66';}}
   const MCPIN='data:image/png;base64,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';
@@ -764,7 +785,7 @@
   function startLL(){return originLL||userLL||(gwMap?gwMap.getCenter().toArray():ORIGIN);}
   function openDirections(){dirMode=true;const b=document.getElementById('dirToggle');if(b)b.classList.add('on');document.getElementById('dirPanel').hidden=false;const pp=document.getElementById('poiPanel');if(pp)pp.hidden=true;const pt=document.getElementById('poiToggle');if(pt)pt.classList.remove('on');}
   function showPuck(v){if(originMk){try{originMk.getElement().style.display=v?'':'none';}catch(e){}}}
-  function ensureStartMk(){if(startMk||!gwMap)return;const el=document.createElement('div');el.className='gwstart';el.innerHTML=STARTSVG;startMk=new maplibregl.Marker({element:el,anchor:'bottom'}).setLngLat(originLL||ORIGIN).addTo(gwMap);}
+  function ensureStartMk(){if(startMk||!gwMap)return;const el=document.createElement('div');el.className=destClass();el.innerHTML=destSVG();startMk=new maplibregl.Marker({element:el,anchor:destAnchor()}).setLngLat(originLL||ORIGIN).addTo(gwMap);}
   function setStart(ll,label){originLL=XY(ll);const fi=document.getElementById('fromInput');if(fi)fi.value=label||'Selected start';ensureStartMk();startMk.setLngLat(originLL);showPuck(false);}
   function useMyLocation(){originLL=null;const fi=document.getElementById('fromInput');if(fi)fi.value='Your location';if(startMk){startMk.remove();startMk=null;}showPuck(true);if(!userLL)locateUser(true);if(destLL)computeRoute();}
   function placeDest(ll,label){destLL=XY(ll);lastDest=destLL;lastDestLabel=label||'';if(destMk)destMk.remove();const el=document.createElement('div');el.className=destClass();el.innerHTML=destSVG();destMk=new maplibregl.Marker({element:el,anchor:destAnchor()}).setLngLat(destLL).addTo(gwMap);const di=document.getElementById('destInput');if(di)di.value=label||'Dropped pin';}
@@ -825,7 +846,9 @@
     setMap(document.getElementById('mapsWrap'),null,k);
     if(!gwMap)return;
     setOriginIcon();buildPOIPanel();applyPixel();
-    if(synthActive){const t=MT[k]||MT.metro;recolorReal(t);ensureRoute(t);addMarkers(t);setFontClass();addStreetLabels(t);}
+    if(synthActive){const t=MT[k]||MT.metro;recolorReal(t);ensureRoute(t);addMarkers(t);setFontClass();addStreetLabels(t);
+      if(originLL){if(startMk)startMk.remove();startMk=null;ensureStartMk();startMk.setLngLat(originLL);showPuck(false);}
+      if(destLL)placeDest(destLL,lastDestLabel);refreshRouteColors();}
     else{switchRealStyle(k);}
   }
   function applyPixel(){if(!gwMap)return;const g=document.getElementById('gwmap');try{gwMap.setPixelRatio(window.devicePixelRatio||1);}catch(e){}if(g)g.classList.remove('pixelated');}
@@ -950,10 +973,12 @@
     document.querySelectorAll('.nav-links a[data-nav]').forEach(a=>a.classList.toggle('active',a.dataset.nav===v));
     const target=document.querySelector('[data-viewpage="'+v+'"]');observeReveals(target);
     if(v==='maps')setTimeout(ensureMap,80);
-    window.scrollTo({top:0,behavior:'auto'});
+    try{window.scrollTo({top:0,behavior:'auto'});}catch(e){window.scrollTo(0,0);}
   }
   document.addEventListener('click',e=>{const el=e.target.closest('[data-nav]');if(el){e.preventDefault();document.getElementById('mobilemenu').classList.remove('open');showView(el.dataset.nav);}});
   document.getElementById('burger').addEventListener('click',()=>document.getElementById('mobilemenu').classList.toggle('open'));
   showView('home');observeReveals(document);
   buildAllMockups();
 </script>
+</body>
+</html>
