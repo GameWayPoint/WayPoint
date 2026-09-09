@@ -105,6 +105,30 @@
   .t-vicenight{--land:#10101f;--water:#4f7678;--greenm:#1e2a24;--building:#332e4d;--bstroke:#3f3a5c;--road-minor:#42404f;--road-major:#42404f;--route:#e37da8;--contour:#2e2c3c;--hud:#eceaf4;--hudbg:rgba(16,16,31,.7)}
   .t-vice .ic{stroke:#2a2830}
   .t-vicenight .ic{stroke:#eceaf4}
+  /* realistic promo mockups */
+  .mmap{position:relative;border-radius:28px;overflow:hidden;aspect-ratio:9/17;background:var(--land);box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+  .mmap>svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .mmap .road{stroke-linecap:round}
+  .mpoi{position:absolute;width:23px;height:23px;transform:translate(-50%,-50%);filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+  .mpoi img{width:100%;height:100%;display:block}
+  .mlabel{position:absolute;transform:translate(-50%,-50%);font-size:11px;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;pointer-events:none;color:#fff;font-family:'Pricedown','Anton',sans-serif}
+  .mmap.f-vice .mlabel{font-family:'GTAArtDeco','Anton',sans-serif}
+  .mmap.dark .mlabel{text-shadow:0 1px 2px rgba(0,0,0,.85)}
+  .mmk{position:absolute;transform:translate(-50%,-50%)}
+  .mmk.player{width:28px;height:28px}.mmk.dest{width:26px;height:26px}
+  .mmk svg{width:100%;height:100%;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.55))}
+  .mhud{position:absolute;top:11px;left:11px;background:var(--hudbg);color:var(--hud);border-radius:9px;padding:5px 9px;font-weight:700;font-size:12px;line-height:1.1;backdrop-filter:blur(6px)}
+  .mhud small{display:block;font-size:7px;letter-spacing:.14em;opacity:.75;margin-top:1px}
+  .mcompass{position:absolute;bottom:11px;right:11px;width:24px;height:24px;border-radius:50%;background:var(--hudbg);color:var(--hud);display:grid;place-items:center;font-size:10px;font-weight:700}
+  .cpwrap{background:linear-gradient(180deg,#1c1c20,#0b0b0d);border-radius:20px;padding:16px;border:1px solid var(--line-2);box-shadow:0 30px 70px rgba(0,0,0,.55)}
+  .cpscreen{position:relative;display:flex;aspect-ratio:16/9;border-radius:10px;overflow:hidden}
+  .cpbanner{width:36%;height:100%;background:#12121a;color:#fff;padding:14px 13px;display:flex;flex-direction:column;gap:5px;font-family:'GTAArtDeco','Anton',sans-serif}
+  .cpbanner .cpdir{font-size:30px;line-height:1;color:#ff4d9e}
+  .cpbanner .cprd{font-weight:700;font-size:13px;letter-spacing:.02em;line-height:1.15}
+  .cpbanner .cpdist{font-size:22px;font-weight:800}
+  .cpbanner .cpeta{margin-top:auto;font-size:10px;opacity:.7;font-family:var(--body)}
+  .cpscreen .mmap{flex:1;height:100%;aspect-ratio:auto;border-radius:0;box-shadow:none}
+  .cpcap{text-align:center;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-top:.7rem}
   .cat-food{--cat:#ff6a3d}.cat-shop{--cat:#3ddc84}.cat-fuel{--cat:#38b6ff}.cat-bar{--cat:#c65cff}.cat-hotel{--cat:#ffb020}
 
   .sw{display:flex;gap:6px;justify-content:center;margin:1rem auto 0;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;width:max-content}
@@ -287,11 +311,7 @@
       <p class="soon">◷ Coming soon — built for iPhone &amp; CarPlay.</p>
     </div>
     <div>
-      <div class="phone"><div class="wrapm t-metro gtav mode-flat" id="heroWrap">
-        <div class="viewport"><div class="stage"></div></div><div class="glow"></div>
-        <div class="hud dist"><div class="b" id="heroDist">1.04 km</div><div class="s">to destination</div></div>
-        <div class="hud compass"><b>N</b></div>
-      </div></div>
+      <div class="phone"><div class="mmap" id="heroWrap" data-mock="metro" data-dist="1.04 km"></div></div>
       <div class="sw" id="heroSw">
         <button data-k="metro" class="active"><span class="dot" style="background:#9ea4a9"></span>GTA V</button>
         <button data-k="vice"><span class="dot" style="background:#ff4d9e"></span>GTA VI</button>
@@ -351,17 +371,17 @@
   <div class="frow reveal">
     <div class="fcopy"><span class="eyebrow">Live navigation</span><h2>Turn-by-turn, for real</h2><p>Real routes, distance, ETA and spoken guidance on live maps — your actual streets, just reskinned. Miss a turn and it re-routes.</p>
       <ul class="fchecks"><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Turn-by-turn directions &amp; ETA</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Spoken voice guidance</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Automatic re-routing</li></ul></div>
-    <div class="fart"><div class="phone" style="max-width:260px"><div class="wrapm t-metro gtav mode-flat"><div class="viewport"><div class="stage"></div></div><div class="glow"></div><div class="hud dist"><div class="b">1.04 km</div><div class="s">next turn</div></div><div class="hud compass"><b>N</b></div></div></div></div>
+    <div class="fart"><div class="phone" style="max-width:260px"><div class="mmap" data-mock="metro" data-dist="1.04 km"></div></div></div>
   </div>
   <div class="frow rev reveal">
     <div class="fcopy"><span class="eyebrow">Map styles</span><h2>Two worlds — GTA V &amp; GTA VI</h2><p>Switch between a dark, minimal GTA V look and a bright GTA VI Vice style with Day &amp; Night modes — with our own art, colors and place icons. Your streets stay real; only the vibe changes.</p>
       <ul class="fchecks"><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>GTA V &amp; GTA VI styles</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Custom game-style place icons</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Day &amp; night looks</li></ul></div>
-    <div class="fart"><div class="phone" style="max-width:260px"><div class="wrapm t-vice gtav mode-flat"><div class="viewport"><div class="stage"></div></div><div class="hud compass"><b>N</b></div></div></div></div>
+    <div class="fart"><div class="phone" style="max-width:260px"><div class="mmap" data-mock="vice" data-dist="0.9 km"></div></div></div>
   </div>
   <div class="frow reveal">
     <div class="fcopy"><span class="eyebrow">In the car</span><h2>Made for Apple CarPlay</h2><p>Big, glanceable and safe — your styled map right on the dashboard, next turn front and center.</p>
       <ul class="fchecks"><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Full-screen map on the car display</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Distraction-light, driver-safe UI</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Search, routes &amp; voice in the car</li></ul></div>
-    <div class="fart"><div class="phone" style="max-width:260px"><div class="wrapm t-vicenight gtav mode-flat"><div class="viewport"><div class="stage"></div></div><div class="hud dist"><div class="b">2.3 mi</div><div class="s">next turn</div></div><div class="hud compass"><b>N</b></div></div></div></div>
+    <div class="fart"><div class="cpwrap"><div class="cpscreen"><div class="cpbanner"><div class="cpdir">&#8598;</div><div class="cprd">Vinewood Blvd</div><div class="cpdist">400 m</div><div class="cpeta">12 min · 3.4 km · ETA 14:22</div></div><div class="mmap wide" data-mock="vicenight"></div></div><div class="cpcap">Apple CarPlay preview</div></div></div>
   </div>
 
   <div class="cards3" style="margin-top:1rem">
@@ -395,6 +415,7 @@
   <div class="stylebar" id="mapStyles">
     <button data-k="metro" class="active"><span class="dot" style="background:#9ea4a9"></span>GTA V</button>
     <button data-k="vice"><span class="dot" style="background:#ff2e9a"></span>GTA VI</button>
+    <button data-k="sa"><span class="dot" style="background:#4f8a3a"></span>San Andreas</button>
   </div>
   <div class="stylebar" id="dayNight" hidden><button data-m="day" class="active">☀ Day</button><button data-m="night">☾ Night</button></div>
   <div class="mapctrls"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">−</button><button id="locate" aria-label="Recenter">◎</button></div>
@@ -457,9 +478,47 @@
   document.querySelectorAll('.stage').forEach(s=>s.appendChild(tpl.content.cloneNode(true)));
 
   function setMap(wrapEl,distEl,k){const C={neon:'t-neon game mode-tilt show-glow',metro:'t-metro gtav mode-flat',frontier:'t-frontier vintage mode-flat show-contour',vice:'t-vice gtav mode-flat',vicenight:'t-vicenight gtav mode-flat'}[k]||'t-metro gtav mode-flat';if(wrapEl)wrapEl.className='wrapm '+C;}
+  const MM_MARK={
+    arrow:'<svg viewBox="0 0 24 24"><path d="M12 1.5 L20.8 21.5 L12 16 L3.2 21.5 Z" fill="#fff" stroke="#0c0d0f" stroke-width="1.7" stroke-linejoin="round"/></svg>',
+    circle:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#26262e" stroke="#f0f0f4" stroke-width="2"/><path d="M16 7.5 L21.6 21 L16 17.8 L10.4 21 Z" fill="#f0f0f4"/></svg>',
+    four:'<svg viewBox="0 0 32 32"><g fill="#b14ff2" stroke="#12001f" stroke-width="1.1" stroke-linejoin="round"><path d="M16 2 L20.5 11 L11.5 11 Z"/><path d="M16 30 L20.5 21 L11.5 21 Z"/><path d="M2 16 L11 11.5 L11 20.5 Z"/><path d="M30 16 L21 11.5 L21 20.5 Z"/></g></svg>'
+  };
+  function mmDot(c){return '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="'+c+'" stroke="'+darken(c,0.58)+'" stroke-width="2"/></svg>';}
+  function mmMapSVG(wide){
+    const W=wide?640:320,H=wide?360:560;let seed=wide?4242:1337;function rnd(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;}
+    let bld='';for(let i=0;i<(wide?46:36);i++){const bx=rnd()*W,by=rnd()*H,bw=9+rnd()*24,bh=9+rnd()*22;bld+='<rect class="bldg" x="'+bx.toFixed(0)+'" y="'+by.toFixed(0)+'" width="'+bw.toFixed(0)+'" height="'+bh.toFixed(0)+'" rx="2"/>';}
+    let grid='';for(let gy=H*0.17;gy<H;gy+=H*0.165){grid+='<path class="road" d="M0,'+gy.toFixed(0)+' H'+W+'" stroke-width="5"/>';}for(let gx=W*0.17;gx<W;gx+=W*0.165){grid+='<path class="road" d="M'+gx.toFixed(0)+',0 V'+H+'" stroke-width="5"/>';}
+    const river=wide?'<path class="water" d="M0,0 L120,0 L156,360 L0,360 Z"/>':'<path class="water" d="M320,0 L320,250 L262,266 L246,66 L282,0 Z"/>';
+    const park=wide?'<ellipse class="grassf" cx="470" cy="70" rx="120" ry="60"/>':'<ellipse class="grassf" cx="66" cy="120" rx="78" ry="50"/>';
+    const hwy=wide?'<path class="hwy" d="M-20,120 C180,150 380,250 660,300" stroke-width="22"/>':'<path class="hwy" d="M-20,90 C130,130 200,320 360,384" stroke-width="20"/>';
+    const main=wide?'<path class="road" d="M300,360 L360,180 L440,120" stroke-width="12"/>':'<path class="road" d="M160,560 L160,300 L206,244" stroke-width="12"/>';
+    const routeD=wide?'M400,340 L400,205 Q400,168 474,150':'M160,486 L160,320 Q160,282 196,258';
+    return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid slice"><rect class="land" x="0" y="0" width="'+W+'" height="'+H+'"/>'+river+park+grid+bld+main+hwy+'<path class="route-glow" d="'+routeD+'" stroke-width="'+(wide?11:12)+'"/><path class="route" d="'+routeD+'" stroke-width="6"/></svg>';
+  }
+  function buildMockup(el,style,opts){
+    opts=opts||{};const vice=style.indexOf('vice')===0;
+    const theme={metro:'t-metro',vice:'t-vice',vicenight:'t-vicenight'}[style]||'t-metro';
+    const dark=(style==='metro'||style==='vicenight')?' dark':'';
+    el.className='mmap '+theme+(vice?' f-vice':'')+dark+(opts.wide?' wide':'');
+    const rc=(MT[style]&&MT[style].routeCol)||'#ff4d9e';
+    const player=vice?MM_MARK.circle:MM_MARK.arrow;
+    const dest=vice?mmDot(rc):MM_MARK.four;
+    let ov='';
+    const pois=opts.wide?[['food',52,56],['shop',70,34],['car',84,60]]:[['food',34,58],['shop',66,40],['clothes',24,72],['hair',52,64],['car',78,50]];
+    pois.forEach(p=>{ov+='<div class="mpoi" style="left:'+p[1]+'%;top:'+p[2]+'%"><img src="'+(POIICONS[p[0]]||'')+'"></div>';});
+    const labels=opts.wide?[['Ocean Drive',60,50]]:[['Ocean Drive',40,52],['5th Street',70,33]];
+    labels.forEach(l=>{ov+='<div class="mlabel" style="left:'+l[1]+'%;top:'+l[2]+'%">'+l[0]+'</div>';});
+    const pP=opts.wide?[62,84]:[50,85],dP=opts.wide?[74,42]:[61,45];
+    ov+='<div class="mmk player" style="left:'+pP[0]+'%;top:'+pP[1]+'%">'+player+'</div>';
+    ov+='<div class="mmk dest" style="left:'+dP[0]+'%;top:'+dP[1]+'%">'+dest+'</div>';
+    if(!opts.wide){ov+='<div class="mhud">'+(opts.dist||'1.2 km')+'<small>TO DEST</small></div><div class="mcompass">N</div>';}
+    el.innerHTML=mmMapSVG(opts.wide)+ov;
+  }
+  const HD2={metro:'1.04 km',vice:'0.9 km'};
+  function buildAllMockups(){document.querySelectorAll('.mmap[data-mock]').forEach(function(el){buildMockup(el,el.dataset.mock,{wide:el.classList.contains('wide'),dist:el.dataset.dist});});}
   const heroWrap=document.getElementById('heroWrap'),heroDist=document.getElementById('heroDist');
   const HD={neon:'1.6 mi',metro:'1.04 km',frontier:'0.7 mi',vice:'0.9 mi'};
-  document.getElementById('heroSw').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;setMap(heroWrap,null,b.dataset.k);heroDist.textContent=HD[b.dataset.k]||'';document.querySelectorAll('#heroSw button').forEach(x=>x.classList.toggle('active',x===b));});
+  document.getElementById('heroSw').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;buildMockup(heroWrap,b.dataset.k,{dist:HD2[b.dataset.k]});document.querySelectorAll('#heroSw button').forEach(x=>x.classList.toggle('active',x===b));});
 
   /* ===== real / synthetic MapLibre map ===== */
   const MICON={
@@ -480,7 +539,8 @@
     frontier:{bg:'#d9c7a0',water:'#9fb9a4',green:'#c7b98a',road:'#4a453c',roadHi:'#34302a',bldg:'#cdbb8e',label:'#4a3620',halo:'#e7dcc2',icon:'vintage',routeCol:'#8f3a1e'},
     viceday:{bg:'#75757b',water:'#4f7678',green:'#576360',road:'#b3abad',roadHi:'#b3abad',bldg:'#7a7780',label:'#ffffff',halo:'#d3d2d6',icon:'gtav',routeCol:'#ff4d9e'},
     vicenight:{bg:'#10101f',water:'#4f7678',green:'#1e2a24',road:'#42404f',roadHi:'#42404f',bldg:'#332e4d',label:'#ffffff',halo:'#0c0b16',icon:'gtav',routeCol:'#e37da8'},
-    blocks:{bg:'#5a8f3c',water:'#4a6fd0',green:'#3f6e2a',road:'#8a6a3f',roadHi:'#a07d4a',bldg:'#7d8a55',label:'#ffffff',halo:'#1e3a12',icon:'none',routeCol:'#d08a3f'}
+    blocks:{bg:'#5a8f3c',water:'#4a6fd0',green:'#3f6e2a',road:'#8a6a3f',roadHi:'#a07d4a',bldg:'#7d8a55',label:'#ffffff',halo:'#1e3a12',icon:'none',routeCol:'#d08a3f'},
+    sa:{bg:'#e9e6dc',water:'#6688a8',green:'#306828',road:'#2c2c2c',roadHi:'#000000',bldg:'#f7fdf6',label:'#20301a',halo:'#f3f5ee',icon:'gtav',routeCol:'#b14ff2'}
   };
   const ORIGIN=[-118.30,34.045];
   let gwMap=null,gwStarted=false,curKey='metro',gwMarkers=[],originMk=null,destMk=null,destLL=null,dirMode=false,streetMks=[],synthActive=false,userLL=null,geoWatch=null,lastDest=null,lastDestLabel='',viceMode='day';
@@ -509,22 +569,41 @@
 
   const STREETS=[{lng:-118.3055,lat:34.0520,name:'Ocean Drive'},{lng:-118.2905,lat:34.0490,name:'5th Street'},{lng:-118.3110,lat:34.0380,name:'Harbor Way'},{lng:-118.2850,lat:34.0570,name:'Sunset Avenue'},{lng:-118.2990,lat:34.0355,name:'Marina Boulevard'},{lng:-118.2955,lat:34.0600,name:'Vinewood Blvd'}];
   function setFontClass(){const g=document.getElementById('gwmap');if(!g)return;g.classList.remove('f-gta','f-rdr','f-mc','f-vice');g.classList.add(curKey.indexOf('vice')===0?'f-vice':curKey==='frontier'?'f-rdr':curKey==='blocks'?'f-mc':'f-gta');}
-  function addStreetLabels(t){streetMks.forEach(m=>m.remove());streetMks=[];if(!gwMap||!synthActive)return;STREETS.forEach(s=>{const el=document.createElement('div');el.className='streetlbl';el.textContent=s.name;el.style.color=t.label;el.style.textShadow=(curKey.indexOf('vice')===0?'none':'0 0 3px '+t.halo+',0 1px 2px '+t.halo+',0 0 6px '+t.halo);streetMks.push(new maplibregl.Marker({element:el}).setLngLat([s.lng,s.lat]).addTo(gwMap));});}
+  function addStreetLabels(t){streetMks.forEach(m=>m.remove());streetMks=[];if(!gwMap||!synthActive)return;STREETS.forEach(s=>{const el=document.createElement('div');el.className='streetlbl';el.textContent=s.name;el.style.color=t.label;el.style.textShadow=(curKey.indexOf('vice')===0?'none':'0 0 3px '+t.halo+',0 1px 2px '+t.halo+',0 0 6px '+t.halo);streetMks.push(new maplibregl.Marker({element:el}).setLngLat([s.lng,s.lat]).addTo(gwMap));});updateStreetVis();}
+  function updateStreetVis(){if(!gwMap)return;const show=gwMap.getZoom()>=11.5;streetMks.forEach(m=>{try{m.getElement().style.display=show?'':'none';}catch(e){}});}
 
   function synthGeo(){
     const c=ORIGIN;function rng(s){return function(){s=(s*1664525+1013904223)>>>0;return s/4294967296;};}const rand=rng(97531);
     const roads={type:'FeatureCollection',features:[]},hi={type:'FeatureCollection',features:[]},bldg={type:'FeatureCollection',features:[]};
-    function wavy(a0,a1,cross,horiz,amp,ph){const p=[],N=46;for(let k=0;k<=N;k++){const t=k/N,a=a0+(a1-a0)*t,off=amp*Math.sin(t*5+ph);p.push(horiz?[a,cross+off]:[cross+off,a]);}return p;}
-    for(let i=0;i<7;i++){const y=c[1]-0.03+0.06*(i/6);roads.features.push({type:'Feature',geometry:{type:'LineString',coordinates:wavy(c[0]-0.05,c[0]+0.05,y,true,0.003,i*1.3)}});}
-    for(let i=0;i<7;i++){const x=c[0]-0.03+0.06*(i/6);roads.features.push({type:'Feature',geometry:{type:'LineString',coordinates:wavy(c[1]-0.05,c[1]+0.05,x,false,0.003,i*0.9)}});}
-    hi.features.push({type:'Feature',geometry:{type:'LineString',coordinates:wavy(c[0]-0.05,c[0]+0.05,c[1]+0.004,true,0.008,0.5)}});
-    hi.features.push({type:'Feature',geometry:{type:'LineString',coordinates:wavy(c[1]-0.05,c[1]+0.05,c[0]-0.006,false,0.01,2.1)}});
-    for(let n=0;n<150;n++){const bx=c[0]-0.045+0.09*rand(),by=c[1]-0.045+0.09*rand(),w=0.0006+0.0016*rand(),h=0.0006+0.0014*rand();bldg.features.push({type:'Feature',geometry:{type:'Polygon',coordinates:[[[bx,by],[bx+w,by],[bx+w,by+h],[bx,by+h],[bx,by]]]}});}
-    const top=[],bot=[],N=40;for(let k=0;k<=N;k++){const t=k/N,lat=c[1]-0.05+0.1*t,lng=c[0]-0.028+0.02*Math.sin(t*3)+0.012*t;top.push([lng,lat]);bot.push([lng-0.006,lat]);}
+    const SPAN=0.55, FINE=0.12; // SPAN = half-width of the whole synthetic city (so it stays full when zoomed out); FINE = dense downtown core
+    function wavy(a0,a1,cross,horiz,amp,ph){const p=[],N=54;for(let k=0;k<=N;k++){const t=k/N,a=a0+(a1-a0)*t,off=amp*Math.sin(t*5+ph);p.push(horiz?[a,cross+off]:[cross+off,a]);}return p;}
+    // Arterial grid spanning the entire area — keeps the map full at low zoom
+    const AN=Math.round(SPAN*2/0.05);
+    for(let i=0;i<=AN;i++){const y=c[1]-SPAN+(2*SPAN)*(i/AN);roads.features.push({type:'Feature',geometry:{type:'LineString',coordinates:wavy(c[0]-SPAN,c[0]+SPAN,y,true,0.006,i*1.3)}});}
+    for(let i=0;i<=AN;i++){const x=c[0]-SPAN+(2*SPAN)*(i/AN);roads.features.push({type:'Feature',geometry:{type:'LineString',coordinates:wavy(c[1]-SPAN,c[1]+SPAN,x,false,0.006,i*0.9)}});}
+    // Fine street grid in the centre — street-level detail when zoomed in
+    const FN=Math.round(FINE*2/0.012);
+    for(let i=0;i<=FN;i++){const y=c[1]-FINE+(2*FINE)*(i/FN);roads.features.push({type:'Feature',geometry:{type:'LineString',coordinates:wavy(c[0]-FINE,c[0]+FINE,y,true,0.002,i*1.7)}});}
+    for(let i=0;i<=FN;i++){const x=c[0]-FINE+(2*FINE)*(i/FN);roads.features.push({type:'Feature',geometry:{type:'LineString',coordinates:wavy(c[1]-FINE,c[1]+FINE,x,false,0.002,i*1.1)}});}
+    // Highways crossing the full span
+    hi.features.push({type:'Feature',geometry:{type:'LineString',coordinates:wavy(c[0]-SPAN,c[0]+SPAN,c[1]+0.02,true,0.05,0.5)}});
+    hi.features.push({type:'Feature',geometry:{type:'LineString',coordinates:wavy(c[1]-SPAN,c[1]+SPAN,c[0]-0.03,false,0.06,2.1)}});
+    hi.features.push({type:'Feature',geometry:{type:'LineString',coordinates:wavy(c[0]-SPAN,c[0]+SPAN,c[1]-0.26,true,0.04,1.4)}});
+    // Buildings concentrated in the centre (they only show when zoomed in anyway)
+    for(let n=0;n<340;n++){const bx=c[0]-FINE+2*FINE*rand(),by=c[1]-FINE+2*FINE*rand(),w=0.0006+0.0016*rand(),h=0.0006+0.0014*rand();bldg.features.push({type:'Feature',geometry:{type:'Polygon',coordinates:[[[bx,by],[bx+w,by],[bx+w,by+h],[bx,by+h],[bx,by]]]}});}
+    // River spanning the full height
+    const top=[],bot=[],N=60;for(let k=0;k<=N;k++){const t=k/N,lat=c[1]-SPAN+2*SPAN*t,lng=c[0]-0.028+0.05*Math.sin(t*3)+0.012*t;top.push([lng,lat]);bot.push([lng-0.01,lat]);}
     const river=top.concat(bot.reverse());river.push(top[0]);
     const water={type:'FeatureCollection',features:[{type:'Feature',geometry:{type:'Polygon',coordinates:[river]}}]};
-    function blob(cx,cy,r){const p=[],M=20;for(let k=0;k<=M;k++){const a=k/M*Math.PI*2,rr=r*(0.7+0.5*rand());p.push([cx+rr*Math.cos(a),cy+rr*Math.sin(a)*0.8]);}return p;}
-    const parks={type:'FeatureCollection',features:[{type:'Feature',geometry:{type:'Polygon',coordinates:[blob(c[0]+0.022,c[1]+0.016,0.011)]}},{type:'Feature',geometry:{type:'Polygon',coordinates:[blob(c[0]-0.03,c[1]-0.022,0.01)]}}]};
+    function blob(cx,cy,r){const p=[],M=22;for(let k=0;k<=M;k++){const a=k/M*Math.PI*2,rr=r*(0.7+0.5*rand());p.push([cx+rr*Math.cos(a),cy+rr*Math.sin(a)*0.8]);}return p;}
+    const parks={type:'FeatureCollection',features:[
+      {type:'Feature',geometry:{type:'Polygon',coordinates:[blob(c[0]+0.03,c[1]+0.02,0.014)]}},
+      {type:'Feature',geometry:{type:'Polygon',coordinates:[blob(c[0]-0.04,c[1]-0.03,0.013)]}},
+      {type:'Feature',geometry:{type:'Polygon',coordinates:[blob(c[0]+0.30,c[1]+0.20,0.055)]}},
+      {type:'Feature',geometry:{type:'Polygon',coordinates:[blob(c[0]-0.32,c[1]+0.13,0.065)]}},
+      {type:'Feature',geometry:{type:'Polygon',coordinates:[blob(c[0]-0.16,c[1]-0.31,0.075)]}},
+      {type:'Feature',geometry:{type:'Polygon',coordinates:[blob(c[0]+0.26,c[1]-0.24,0.07)]}}
+    ]};
     return {water,parks,bldg,roads,hi};
   }
   function synthStyle(){const g=synthGeo();return {version:8,sources:{w:{type:'geojson',data:g.water},p:{type:'geojson',data:g.parks},b:{type:'geojson',data:g.bldg},r:{type:'geojson',data:g.roads},h:{type:'geojson',data:g.hi}},layers:[
@@ -532,8 +611,8 @@
     {id:'synth-water',type:'fill',source:'w',paint:{'fill-color':'#17232f'}},
     {id:'synth-park',type:'fill',source:'p',paint:{'fill-color':'#12211a'}},
     {id:'synth-bldg',type:'fill',source:'b',paint:{'fill-color':'#1a1a1d'}},
-    {id:'synth-road',type:'line',source:'r',layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#8c8c8a','line-width':['interpolate',['linear'],['zoom'],11,1,15,4]}},
-    {id:'synth-roadhi',type:'line',source:'h',layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#c2c2bd','line-width':['interpolate',['linear'],['zoom'],11,3,15,10]}}
+    {id:'synth-road',type:'line',source:'r',layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#8c8c8a','line-width':['interpolate',['linear'],['zoom'],9,0.6,11,1.2,15,4]}},
+    {id:'synth-roadhi',type:'line',source:'h',layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#c2c2bd','line-width':['interpolate',['linear'],['zoom'],9,1.6,11,3,15,10]}}
   ]};}
 
   function sp(id,p,v){try{gwMap.setPaintProperty(id,p,v)}catch(e){}}
@@ -578,7 +657,7 @@
   function ensureOrigin(){if(originMk||!gwMap)return;const el=document.createElement('div');el.className='gworigin';el.innerHTML=originSVG();originMk=new maplibregl.Marker({element:el,rotationAlignment:'map'}).setLngLat(userLL||ORIGIN).addTo(gwMap);}
   function onPos(pos){userLL=[pos.coords.longitude,pos.coords.latitude];if(!gwMap)return;ensureOrigin();originMk.setLngLat(userLL);const h=pos.coords.heading;if(h!=null&&!isNaN(h)){try{originMk.setRotation(h);}catch(e){}}}
   function locateUser(fly){if(!navigator.geolocation||!gwMap)return;navigator.geolocation.getCurrentPosition(function(pos){onPos(pos);if(fly)gwMap.easeTo({center:userLL,zoom:15});},function(){},{enableHighAccuracy:true,timeout:8000,maximumAge:15000});if(!geoWatch){try{geoWatch=navigator.geolocation.watchPosition(onPos,function(){},{enableHighAccuracy:true,maximumAge:5000});}catch(e){}}}
-  function afterLoad(){const t=MT[curKey];if(synthActive){recolorReal(t);setFontClass();addStreetLabels(t);}ensureRoute(t);addMarkers(t);ensureOrigin();if(!synthActive){locateUser(true);setupPOI();}gwMap.on('click',e=>{if(dirMode)setDestination(e.lngLat);});}
+  function afterLoad(){const t=MT[curKey];if(synthActive){recolorReal(t);setFontClass();addStreetLabels(t);gwMap.on('zoom',updateStreetVis);}ensureRoute(t);addMarkers(t);ensureOrigin();if(!synthActive){locateUser(true);setupPOI();}gwMap.on('click',e=>{if(dirMode)setDestination(e.lngLat);});}
 
   function haversine(a,b){const R=6371,dLat=(b[1]-a[1])*Math.PI/180,dLng=(b[0]-a[0])*Math.PI/180,la1=a[1]*Math.PI/180,la2=b[1]*Math.PI/180;const x=Math.sin(dLat/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLng/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
   function fitRoute(a,b){try{const bb=new maplibregl.LngLatBounds(a,a);bb.extend(b);gwMap.fitBounds(bb,{padding:70,maxZoom:15,duration:800});}catch(e){}}
@@ -635,7 +714,7 @@
   }
 
   function showPhone(){const f=document.getElementById('mapfallback');if(f)f.hidden=false;const g=document.getElementById('gwmap');if(g)g.style.display='none';}
-  function initSynthetic(){synthActive=true;try{gwMap=new maplibregl.Map({container:'gwmap',style:synthStyle(),center:ORIGIN,zoom:13.2,attributionControl:false});const n=document.getElementById('mapnote');if(n)n.hidden=false;gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});}catch(e){showPhone();}}
+  function initSynthetic(){synthActive=true;try{gwMap=new maplibregl.Map({container:'gwmap',style:synthStyle(),center:ORIGIN,zoom:13.2,minZoom:10,maxZoom:19,attributionControl:false});const n=document.getElementById('mapnote');if(n)n.hidden=false;gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});}catch(e){showPhone();}}
   function toSynth(){if(gwMap){try{gwMap.remove()}catch(e){}gwMap=null;}if(typeof maplibregl!=='undefined')initSynthetic();else showPhone();}
   const RPAL={
     metro:{bg:'#141416',land:'#17181b',lc:'#181a1c',park:'#181a1c',water:'#1a1f24',bldg:'#24272c',bl:'#2d3137',
@@ -646,7 +725,10 @@
       bnd:'#8a848c',lr:'#ffffff',lcity:'#ffffff',ls:'#ffffff',lw:'#ffffff',halo:'#d3d2d6',hw:0,font:'GTAArtDeco',d3:false},
     vicenight:{bg:'#10101f',land:'#10101f',lc:'#10101f',park:'#1e2a24',water:'#4f7678',bldg:'#332e4d',bl:'#3f3a5c',
       mot:'#42404f',trk:'#42404f',pri:'#42404f',sec:'#42404f',ter:'#42404f',min:'#42404f',srv:'#42404f',pth:'#42404f',cas:'#10101f',
-      bnd:'#2e2c3c',lr:'#ffffff',lcity:'#ffffff',ls:'#ffffff',lw:'#ffffff',halo:'#0c0b16',hw:0,font:'GTAArtDeco',d3:false}
+      bnd:'#2e2c3c',lr:'#ffffff',lcity:'#ffffff',ls:'#ffffff',lw:'#ffffff',halo:'#0c0b16',hw:0,font:'GTAArtDeco',d3:false},
+    sa:{bg:'#e9e6dc',land:'#e9e6dc',lc:'#306828',park:'#306828',water:'#6688a8',bldg:'#f7fdf6',bl:'#c7c7be',
+      mot:'#000000',trk:'#080808',pri:'#121212',sec:'#1c1c1c',ter:'#242424',min:'#2c2c2c',srv:'#383838',pth:'#4a4a4a',cas:'#e9e6dc',
+      bnd:'#9a9a90',lr:'#20301a',lcity:'#182610',ls:'#28321e',lw:'#2c4a55',halo:'#f3f5ee',hw:1,font:'Pricedown',pk:'#979797',sand:'#958471',d3:false}
   };
   function realStyle(key){
     const p=RPAL[key]||RPAL.metro;const hw=(p.hw==null?1:p.hw);
@@ -676,6 +758,12 @@
       {id:'lbl-suburb',type:'symbol',source:'openmaptiles','source-layer':'place',filter:['match',['get','class'],['suburb','neighbourhood','quarter'],true,false],layout:{'text-field':['get','name'],'text-font':[p.font],'text-size':W(12,10,15,14),'text-transform':'uppercase','text-letter-spacing':0.12},paint:{'text-color':p.ls,'text-halo-color':p.halo,'text-halo-width':1.4*hw}},
       {id:'lbl-city',type:'symbol',source:'openmaptiles','source-layer':'place',filter:['match',['get','class'],['city','town'],true,false],layout:{'text-field':['get','name'],'text-font':[p.font],'text-size':W(4,11,8,16,12,22),'text-transform':'uppercase','text-letter-spacing':0.08},paint:{'text-color':p.lcity,'text-halo-color':p.halo,'text-halo-width':2*hw}}
     ];
+    if(p.sand||p.pk){
+      const ins=[];
+      if(p.sand)ins.push({id:'landcover-sand',type:'fill',source:'openmaptiles','source-layer':'landcover',filter:['==',['get','class'],'sand'],paint:{'fill-color':p.sand,'fill-opacity':0.8}});
+      if(p.pk)ins.push({id:'landuse-parking',type:'fill',source:'openmaptiles','source-layer':'landuse',filter:['==',['get','class'],'parking'],paint:{'fill-color':p.pk,'fill-opacity':0.9}});
+      const wi=layers.findIndex(l=>l.id==='water');layers.splice(wi<0?layers.length:wi,0,...ins);
+    }
     if(p.d3){layers.splice(layers.length-4,0,{id:'building-3d',type:'fill-extrusion',source:'openmaptiles','source-layer':'building',minzoom:14,paint:{'fill-extrusion-color':p.bldg,'fill-extrusion-height':['coalesce',['get','render_height'],8],'fill-extrusion-base':['coalesce',['get','render_min_height'],0],'fill-extrusion-opacity':0.92}});}
     return {version:8,glyphs:'{fontstack}/{range}.pbf',sprite:'https://tiles.openfreemap.org/sprites/ofm_f384/ofm',sources:{openmaptiles:{type:'vector',url:'https://tiles.openfreemap.org/planet'}},layers:layers};
   }
@@ -683,7 +771,7 @@
     if(gwStarted)return;gwStarted=true;
     if(typeof maplibregl==='undefined'){showPhone();return;}
     try{
-      gwMap=new maplibregl.Map({container:'gwmap',style:realStyle(curKey),center:ORIGIN,zoom:13,minZoom:3,maxZoom:19,pitch:0,attributionControl:false,fadeDuration:0});
+      gwMap=new maplibregl.Map({container:'gwmap',style:realStyle(curKey),center:ORIGIN,zoom:13,minZoom:10,maxZoom:19,pitch:0,attributionControl:false,fadeDuration:0});
       let ok=false,done=false,fbTimer=null;
       gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});
       gwMap.on('sourcedata',e=>{if(e.sourceId==='openmaptiles'&&e.isSourceLoaded){ok=true;if(fbTimer){clearTimeout(fbTimer);fbTimer=null;}}});
@@ -719,4 +807,5 @@
   document.addEventListener('click',e=>{const el=e.target.closest('[data-nav]');if(el){e.preventDefault();document.getElementById('mobilemenu').classList.remove('open');showView(el.dataset.nav);}});
   document.getElementById('burger').addEventListener('click',()=>document.getElementById('mobilemenu').classList.toggle('open'));
   showView('home');observeReveals(document);
+  buildAllMockups();
 </script>
