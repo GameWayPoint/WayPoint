@@ -31,9 +31,9 @@
   .asbadge .astxt small{font-size:.6rem;letter-spacing:.02em;opacity:.9}
   .asbadge .astxt b{font-family:var(--disp);font-size:1.18rem;font-weight:700;letter-spacing:-.01em}
   .asbadge.sm{padding:.38rem .8rem}.asbadge.sm .applelogo{width:20px;height:20px}.asbadge.sm .astxt b{font-size:1rem}
-  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal{opacity:0;transform:translateY(30px) scale(.985);transition:opacity .72s cubic-bezier(.2,.7,.2,1),transform .72s cubic-bezier(.2,.7,.2,1);will-change:opacity,transform}
   .reveal.in{opacity:1;transform:none}
-  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}html{scroll-behavior:auto}}
 
   header.nav{position:sticky;top:0;z-index:60;background:rgba(8,9,13,.72);backdrop-filter:blur(14px) saturate(1.3);border-bottom:1px solid var(--line)}
   .nav-in{display:flex;align-items:center;gap:1.2rem;height:66px}
@@ -103,10 +103,17 @@
   .t-frontier{--land:#d9c7a0;--water:#9fb9a4;--greenm:#c7b98a;--building:#cdbb8e;--bstroke:#463f34;--road-minor:#4a453c;--road-major:#34302a;--route:#8f3a1e;--contour:#b98f5e;--hud:#3f2f1c;--hudbg:rgba(224,208,172,.85)}
   .t-vice{--land:#75757b;--water:#4f7678;--greenm:#576360;--building:#7a7780;--bstroke:#6a676f;--road-minor:#b3abad;--road-major:#b3abad;--route:#ff4d9e;--contour:#8a848c;--hud:#2b2830;--hudbg:rgba(201,198,191,.85)}
   .t-vicenight{--land:#10101f;--water:#4f7678;--greenm:#1e2a24;--building:#332e4d;--bstroke:#3f3a5c;--road-minor:#42404f;--road-major:#42404f;--route:#e37da8;--contour:#2e2c3c;--hud:#eceaf4;--hudbg:rgba(16,16,31,.7)}
+  .t-sa{--land:#e9e6dc;--water:#6688a8;--greenm:#306828;--building:#f7fdf6;--bstroke:#c7c7be;--road-minor:#2c2c2c;--road-major:#050505;--route:#d90412;--contour:#9a9a90;--hud:#20301a;--hudbg:rgba(233,230,220,.9)}
+  .t-mc{--land:#6fa02f;--water:#3a53d6;--greenm:#3f6b1e;--building:#9a9a9a;--bstroke:#6e6e6e;--road-minor:#8a6a3f;--road-major:#caa96b;--route:#9e6941;--contour:#5a5a5a;--hud:#ffffff;--hudbg:rgba(38,54,20,.72)}
   .t-vice .ic{stroke:#2a2830}
   .t-vicenight .ic{stroke:#eceaf4}
+  .mmap.f-mc .mlabel{font-family:'Minecraft','Courier New',monospace;font-size:9px;text-shadow:1px 1px 0 rgba(0,0,0,.55)}
+  .mmap.t-sa .mlabel,.mmap.t-mc .mlabel{color:#fff}
   /* realistic promo mockups */
   .mmap{position:relative;border-radius:28px;overflow:hidden;aspect-ratio:9/17;background:var(--land);box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+  .mapgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px 16px;max-width:330px;margin-inline:auto}
+  .mapgrid .phone{margin:0}
+  .mgl{display:block;text-align:center;margin-top:.45rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-faint)}
   .mmap>svg{position:absolute;inset:0;width:100%;height:100%;display:block}
   .mmap .road{stroke-linecap:round}
   .mpoi{position:absolute;width:23px;height:23px;transform:translate(-50%,-50%);filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
@@ -131,7 +138,7 @@
   .cpcap{text-align:center;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-top:.7rem}
   .cat-food{--cat:#ff6a3d}.cat-shop{--cat:#3ddc84}.cat-fuel{--cat:#38b6ff}.cat-bar{--cat:#c65cff}.cat-hotel{--cat:#ffb020}
 
-  .sw{display:flex;gap:6px;justify-content:center;margin:1rem auto 0;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;width:max-content}
+  .sw{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:1rem auto 0;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:5px;width:max-content;max-width:100%}
   .sw button{font:inherit;font-weight:600;font-size:.82rem;color:var(--ink-soft);background:transparent;border:0;border-radius:999px;padding:8px 14px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:.15s}
   .sw button .dot{width:8px;height:8px;border-radius:50%}
   .sw button:hover{color:#fff}.sw button.active{background:#fff;color:#0a0b10}
@@ -320,6 +327,8 @@
       <div class="sw" id="heroSw">
         <button data-k="metro" class="active"><span class="dot" style="background:#9ea4a9"></span>GTA V</button>
         <button data-k="vice"><span class="dot" style="background:#ff4d9e"></span>GTA VI</button>
+        <button data-k="sa"><span class="dot" style="background:#4f8a3a"></span>San Andreas</button>
+        <button data-k="mc"><span class="dot" style="background:#6fa02f"></span>Minecraft</button>
       </div>
     </div>
   </div>
@@ -379,9 +388,14 @@
     <div class="fart"><div class="phone" style="max-width:260px"><div class="mmap" data-mock="metro" data-dist="1.04 km"></div></div></div>
   </div>
   <div class="frow rev reveal">
-    <div class="fcopy"><span class="eyebrow">Map styles</span><h2>Two worlds — GTA V &amp; GTA VI</h2><p>Switch between a dark, minimal GTA V look and a bright GTA VI Vice style with Day &amp; Night modes — with our own art, colors and place icons. Your streets stay real; only the vibe changes.</p>
-      <ul class="fchecks"><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>GTA V &amp; GTA VI styles</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Custom game-style place icons</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Day &amp; night looks</li></ul></div>
-    <div class="fart"><div class="phone" style="max-width:260px"><div class="mmap" data-mock="vice" data-dist="0.9 km"></div></div></div>
+    <div class="fcopy"><span class="eyebrow">Map styles</span><h2>Four worlds, one map</h2><p>Switch your real streets between GTA V, GTA VI (with Day &amp; Night), San Andreas and Minecraft — each with its own art, colors, fonts and place icons. Your streets stay real; only the vibe changes.</p>
+      <ul class="fchecks"><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>GTA V, GTA VI, San Andreas &amp; Minecraft</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Custom game-style place icons per map</li><li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Day &amp; night looks</li></ul></div>
+    <div class="fart"><div class="mapgrid">
+      <div class="phone reveal"><div class="mmap" data-mock="metro" data-dist="1.04 km"></div><span class="mgl">GTA V</span></div>
+      <div class="phone reveal"><div class="mmap" data-mock="vice" data-dist="0.9 km"></div><span class="mgl">GTA VI</span></div>
+      <div class="phone reveal"><div class="mmap" data-mock="sa" data-dist="1.2 km"></div><span class="mgl">San Andreas</span></div>
+      <div class="phone reveal"><div class="mmap" data-mock="mc" data-dist="340 m"></div><span class="mgl">Minecraft</span></div>
+    </div></div>
   </div>
   <div class="frow reveal">
     <div class="fcopy"><span class="eyebrow">In the car</span><h2>Made for Apple CarPlay</h2><p>Big, glanceable and safe — your styled map right on the dashboard, next turn front and center.</p>
@@ -503,24 +517,28 @@
   }
   function buildMockup(el,style,opts){
     opts=opts||{};const vice=style.indexOf('vice')===0;
-    const theme={metro:'t-metro',vice:'t-vice',vicenight:'t-vicenight'}[style]||'t-metro';
+    const theme={metro:'t-metro',vice:'t-vice',vicenight:'t-vicenight',sa:'t-sa',mc:'t-mc'}[style]||'t-metro';
     const dark=(style==='metro'||style==='vicenight')?' dark':'';
-    el.className='mmap '+theme+(vice?' f-vice':'')+dark+(opts.wide?' wide':'');
+    const fontcls=vice?' f-vice':(style==='mc'?' f-mc':'');
+    el.className='mmap '+theme+fontcls+dark+(opts.wide?' wide':'');
     const rc=(MT[style]&&MT[style].routeCol)||'#ff4d9e';
-    const player=vice?MM_MARK.circle:MM_MARK.arrow;
-    const dest=vice?mmDot(rc):MM_MARK.four;
+    const pimg=function(u){return '<img src="'+u+'" style="width:100%;height:100%;image-rendering:pixelated;display:block">';};
+    const player=style==='mc'?pimg(MCLOC):vice?MM_MARK.circle:MM_MARK.arrow;
+    const dest=style==='mc'?pimg(MCPIN):style==='sa'?SADESTSVG:vice?mmDot(rc):MM_MARK.four;
+    const icons=style==='sa'?POIICONS_SA:style==='mc'?POIICONS_MC:POIICONS;
     let ov='';
     const pois=opts.wide?[['food',52,56],['shop',70,34],['car',84,60]]:[['food',34,58],['shop',66,40],['clothes',24,72],['hair',52,64],['car',78,50]];
-    pois.forEach(p=>{ov+='<div class="mpoi" style="left:'+p[1]+'%;top:'+p[2]+'%"><img src="'+(POIICONS[p[0]]||'')+'"></div>';});
+    pois.forEach(p=>{ov+='<div class="mpoi" style="left:'+p[1]+'%;top:'+p[2]+'%"><img src="'+(icons[p[0]]||POIICONS[p[0]]||'')+'"></div>';});
     const labels=opts.wide?[['Ocean Drive',60,50]]:[['Ocean Drive',40,52],['5th Street',70,33]];
     labels.forEach(l=>{ov+='<div class="mlabel" style="left:'+l[1]+'%;top:'+l[2]+'%">'+l[0]+'</div>';});
     const pP=opts.wide?[62,84]:[50,85],dP=opts.wide?[74,42]:[61,45];
     ov+='<div class="mmk player" style="left:'+pP[0]+'%;top:'+pP[1]+'%">'+player+'</div>';
-    ov+='<div class="mmk dest" style="left:'+dP[0]+'%;top:'+dP[1]+'%">'+dest+'</div>';
+    const destStyle=style==='mc'?';width:22px;height:42px':'';
+    ov+='<div class="mmk dest" style="left:'+dP[0]+'%;top:'+dP[1]+'%'+destStyle+'">'+dest+'</div>';
     if(!opts.wide){ov+='<div class="mhud">'+(opts.dist||'1.2 km')+'<small>TO DEST</small></div><div class="mcompass">N</div>';}
     el.innerHTML=mmMapSVG(opts.wide)+ov;
   }
-  const HD2={metro:'1.04 km',vice:'0.9 km'};
+  const HD2={metro:'1.04 km',vice:'0.9 km',sa:'1.2 km',mc:'340 m'};
   function buildAllMockups(){document.querySelectorAll('.mmap[data-mock]').forEach(function(el){buildMockup(el,el.dataset.mock,{wide:el.classList.contains('wide'),dist:el.dataset.dist});});}
   const heroWrap=document.getElementById('heroWrap'),heroDist=document.getElementById('heroDist');
   const HD={neon:'1.6 mi',metro:'1.04 km',frontier:'0.7 mi',vice:'0.9 mi'};
@@ -736,7 +754,7 @@
   function applyPixel(){if(!gwMap)return;const g=document.getElementById('gwmap');try{gwMap.setPixelRatio(window.devicePixelRatio||1);}catch(e){}if(g)g.classList.remove('pixelated');}
 
   function showPhone(){const f=document.getElementById('mapfallback');if(f)f.hidden=false;const g=document.getElementById('gwmap');if(g)g.style.display='none';}
-  function initSynthetic(){synthActive=true;try{gwMap=new maplibregl.Map({container:'gwmap',style:synthStyle(),center:ORIGIN,zoom:13.2,minZoom:2,maxZoom:19,attributionControl:false});const n=document.getElementById('mapnote');if(n)n.hidden=false;gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});}catch(e){showPhone();}}
+  function initSynthetic(){synthActive=true;try{gwMap=new maplibregl.Map({container:'gwmap',style:synthStyle(),center:ORIGIN,zoom:13.2,minZoom:5,maxZoom:19,attributionControl:false});const n=document.getElementById('mapnote');if(n)n.hidden=false;gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});}catch(e){showPhone();}}
   function toSynth(){if(gwMap){try{gwMap.remove()}catch(e){}gwMap=null;}if(typeof maplibregl!=='undefined')initSynthetic();else showPhone();}
   const RPAL={
     metro:{bg:'#141416',land:'#17181b',lc:'#181a1c',park:'#181a1c',water:'#1a1f24',bldg:'#24272c',bl:'#2d3137',
@@ -805,7 +823,7 @@
     if(gwStarted)return;gwStarted=true;
     if(typeof maplibregl==='undefined'){showPhone();return;}
     try{
-      gwMap=new maplibregl.Map({container:'gwmap',style:realStyle(curKey),center:ORIGIN,zoom:13,minZoom:2,maxZoom:19,pitch:0,attributionControl:false,fadeDuration:0});
+      gwMap=new maplibregl.Map({container:'gwmap',style:realStyle(curKey),center:ORIGIN,zoom:13,minZoom:5,maxZoom:19,pitch:0,attributionControl:false,fadeDuration:0});
       let ok=false,done=false,fbTimer=null;
       gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});
       gwMap.on('sourcedata',e=>{if(e.sourceId==='openmaptiles'&&e.isSourceLoaded){ok=true;if(fbTimer){clearTimeout(fbTimer);fbTimer=null;}}});
@@ -829,7 +847,7 @@
 
   /* ===== router + reveals ===== */
   const views=document.querySelectorAll('[data-viewpage]');
-  const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}})},{threshold:.12});
+  const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){const el=en.target;try{const sibs=[].slice.call(el.parentNode.children).filter(c=>c.classList&&c.classList.contains('reveal'));const idx=sibs.indexOf(el);if(idx>0)el.style.transitionDelay=(Math.min(idx,5)*0.08)+'s';}catch(e){}el.classList.add('in');io.unobserve(el);}})},{threshold:.12});
   function observeReveals(scope){(scope||document).querySelectorAll('.reveal:not(.in)').forEach(el=>io.observe(el));}
   function showView(v){
     views.forEach(p=>p.hidden=p.dataset.viewpage!==v);
