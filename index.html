@@ -904,7 +904,7 @@
   function applyPixel(){if(!gwMap)return;const g=document.getElementById('gwmap');try{gwMap.setPixelRatio(window.devicePixelRatio||1);}catch(e){}if(g)g.classList.remove('pixelated');}
 
   function showPhone(){const f=document.getElementById('mapfallback');if(f)f.hidden=false;const g=document.getElementById('gwmap');if(g)g.style.display='none';}
-  function initSynthetic(){synthActive=true;try{gwMap=new maplibregl.Map({container:'gwmap',style:synthStyle(),center:ORIGIN,zoom:13.2,minZoom:5,maxZoom:19,attributionControl:false,renderWorldCopies:false,fadeDuration:300,maxTileCacheSize:512});const n=document.getElementById('mapnote');if(n)n.hidden=false;gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});}catch(e){showPhone();}}
+  function initSynthetic(){synthActive=true;try{gwMap=new maplibregl.Map({container:'gwmap',style:synthStyle(),center:ORIGIN,zoom:13.2,minZoom:5,maxZoom:19,attributionControl:false,renderWorldCopies:false,fadeDuration:0,maxTileCacheSize:512});const n=document.getElementById('mapnote');if(n)n.hidden=false;gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});}catch(e){showPhone();}}
   function toSynth(){if(gwMap){try{gwMap.remove()}catch(e){}gwMap=null;}if(typeof maplibregl!=='undefined')initSynthetic();else showPhone();}
   const RPAL={
     metro:{bg:'#141416',land:'#17181b',lc:'#181a1c',park:'#181a1c',water:'#1a1f24',bldg:'#24272c',bl:'#2d3137',
@@ -977,7 +977,7 @@
     if(gwStarted)return;gwStarted=true;
     if(typeof maplibregl==='undefined'){showPhone();return;}
     try{
-      gwMap=new maplibregl.Map({container:'gwmap',style:realStyle(curKey),center:ORIGIN,zoom:13,minZoom:5,maxZoom:19,pitch:0,attributionControl:false,fadeDuration:300,renderWorldCopies:false,maxTileCacheSize:512});
+      gwMap=new maplibregl.Map({container:'gwmap',style:realStyle(curKey),center:ORIGIN,zoom:13,minZoom:5,maxZoom:19,pitch:0,attributionControl:false,fadeDuration:0,renderWorldCopies:false,maxTileCacheSize:512});
       let ok=false,done=false,fbTimer=null;
       gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});
       gwMap.on('sourcedata',e=>{if(e.sourceId==='openmaptiles'&&e.isSourceLoaded){ok=true;if(fbTimer){clearTimeout(fbTimer);fbTimer=null;}}});
