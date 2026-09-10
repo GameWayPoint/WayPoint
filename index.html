@@ -870,6 +870,10 @@
   function switchRealStyle(k){
     if(!gwMap)return;poiReady=false;
     gwMap.setStyle(realStyle(k));
+    // DOM markers survive setStyle — refresh their icons to the new game instantly, without waiting for tiles.
+    setOriginIcon();
+    if(destLL)placeDest(destLL,lastDestLabel,lastDestKind);
+    if(originLL){if(startMk)startMk.remove();startMk=null;ensureStartMk();startMk.setLngLat(originLL);showPuck(false);}
     let did=false;
     const finish=function(){
       if(did||!gwMap)return;
@@ -878,14 +882,12 @@
       const t=MT[k]||MT.metro;
       ensureRoute(t);ensureOrigin();setupPOI();
       try{gwMap.easeTo({pitch:0,bearing:0,duration:400});}catch(e){}
-      // redraw route + markers in the new style without re-fetching
-      if(originLL){if(startMk)startMk.remove();startMk=null;ensureStartMk();startMk.setLngLat(originLL);showPuck(false);}
-      if(destLL)placeDest(destLL,lastDestLabel,lastDestKind);
       if(lastRoute&&lastRoute.geom){const s=gwMap.getSource('gw-route');if(s)s.setData({type:'Feature',properties:{},geometry:lastRoute.geom});}
       refreshRouteColors();updateTripInfo();
     };
     gwMap.on('styledata',finish);
-    setTimeout(finish,1400);
+    try{gwMap.once('idle',finish);}catch(e){}
+    setTimeout(finish,600);
   }
   function applyMap(sel){
     const isVice=(sel==='vice');const k=isVice?('vice'+viceMode):sel;curKey=k;
@@ -902,7 +904,7 @@
   function applyPixel(){if(!gwMap)return;const g=document.getElementById('gwmap');try{gwMap.setPixelRatio(window.devicePixelRatio||1);}catch(e){}if(g)g.classList.remove('pixelated');}
 
   function showPhone(){const f=document.getElementById('mapfallback');if(f)f.hidden=false;const g=document.getElementById('gwmap');if(g)g.style.display='none';}
-  function initSynthetic(){synthActive=true;try{gwMap=new maplibregl.Map({container:'gwmap',style:synthStyle(),center:ORIGIN,zoom:13.2,minZoom:5,maxZoom:19,attributionControl:false,renderWorldCopies:false,fadeDuration:0});const n=document.getElementById('mapnote');if(n)n.hidden=false;gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});}catch(e){showPhone();}}
+  function initSynthetic(){synthActive=true;try{gwMap=new maplibregl.Map({container:'gwmap',style:synthStyle(),center:ORIGIN,zoom:13.2,minZoom:5,maxZoom:19,attributionControl:false,renderWorldCopies:false,fadeDuration:300,maxTileCacheSize:512});const n=document.getElementById('mapnote');if(n)n.hidden=false;gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});}catch(e){showPhone();}}
   function toSynth(){if(gwMap){try{gwMap.remove()}catch(e){}gwMap=null;}if(typeof maplibregl!=='undefined')initSynthetic();else showPhone();}
   const RPAL={
     metro:{bg:'#141416',land:'#17181b',lc:'#181a1c',park:'#181a1c',water:'#1a1f24',bldg:'#24272c',bl:'#2d3137',
@@ -975,7 +977,7 @@
     if(gwStarted)return;gwStarted=true;
     if(typeof maplibregl==='undefined'){showPhone();return;}
     try{
-      gwMap=new maplibregl.Map({container:'gwmap',style:realStyle(curKey),center:ORIGIN,zoom:13,minZoom:5,maxZoom:19,pitch:0,attributionControl:false,fadeDuration:0,renderWorldCopies:false});
+      gwMap=new maplibregl.Map({container:'gwmap',style:realStyle(curKey),center:ORIGIN,zoom:13,minZoom:5,maxZoom:19,pitch:0,attributionControl:false,fadeDuration:300,renderWorldCopies:false,maxTileCacheSize:512});
       let ok=false,done=false,fbTimer=null;
       gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});
       gwMap.on('sourcedata',e=>{if(e.sourceId==='openmaptiles'&&e.isSourceLoaded){ok=true;if(fbTimer){clearTimeout(fbTimer);fbTimer=null;}}});
