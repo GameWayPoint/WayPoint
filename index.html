@@ -798,8 +798,8 @@
     ? '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#26262e" stroke="#f0f0f4" stroke-width="2"/><path d="M16 7.5 L21.6 21 L16 17.8 L10.4 21 Z" fill="#f0f0f4"/></svg>'
     : '<svg viewBox="0 0 24 24"><path d="M12 1.5 L20.8 21.5 L12 16 L3.2 21.5 Z" fill="#ffffff" stroke="#0c0d0f" stroke-width="1.7" stroke-linejoin="round"/></svg>';}
   function setOriginIcon(){if(originMk){try{originMk.getElement().innerHTML=originSVG();if(curKey==='mc')originMk.setRotation(0);}catch(e){}}}
-  function ensureOrigin(){if(originMk||!gwMap)return;const el=document.createElement('div');el.className='gworigin';el.innerHTML=originSVG();originMk=new maplibregl.Marker({element:el,rotationAlignment:'map'}).setLngLat(userLL||ORIGIN).addTo(gwMap);}
-  function onPos(pos){userLL=[pos.coords.longitude,pos.coords.latitude];if(!gwMap)return;ensureOrigin();originMk.setLngLat(userLL);const h=pos.coords.heading;if(h!=null&&!isNaN(h)&&curKey!=='mc'){try{originMk.setRotation(h);}catch(e){}}}
+  function ensureOrigin(){if(originMk||!gwMap)return;const el=document.createElement('div');el.className='gworigin';el.innerHTML=originSVG();originMk=new maplibregl.Marker({element:el,rotationAlignment:'map'}).setLngLat(userLL||ORIGIN).addTo(gwMap);if(!userLL)showPuck(false);}
+  function onPos(pos){userLL=[pos.coords.longitude,pos.coords.latitude];if(!gwMap)return;ensureOrigin();originMk.setLngLat(userLL);if(!originLL)showPuck(true);const h=pos.coords.heading;if(h!=null&&!isNaN(h)&&curKey!=='mc'){try{originMk.setRotation(h);}catch(e){}}}
   function locateUser(fly){if(!navigator.geolocation||!gwMap)return;navigator.geolocation.getCurrentPosition(function(pos){onPos(pos);if(fly)gwMap.easeTo({center:userLL,zoom:15});},function(){},{enableHighAccuracy:true,timeout:8000,maximumAge:15000});if(!geoWatch){try{geoWatch=navigator.geolocation.watchPosition(onPos,function(){},{enableHighAccuracy:true,maximumAge:5000});}catch(e){}}}
   function afterLoad(){const t=MT[curKey];if(synthActive){recolorReal(t);setFontClass();addStreetLabels(t);gwMap.on('zoom',updateStreetVis);}ensureRoute(t);addMarkers(t);ensureOrigin();buildPOIPanel();if(!synthActive){locateUser(true);setupPOI();}try{gwMap.doubleClickZoom.disable();}catch(e){}gwMap.on('click',e=>{if(dirMode)handleMapPin(e.lngLat);});gwMap.on('dblclick',e=>{if(e.originalEvent&&e.originalEvent.preventDefault)e.originalEvent.preventDefault();quickDest(e.lngLat);});}
 
@@ -809,25 +809,47 @@
   function fmtDur(min){min=Math.max(1,Math.round(min));if(min<60)return min+' min';const h=Math.floor(min/60),m=min%60;return h+' h'+(m?' '+m+' min':'');}
   function XY(ll){return [ll.lng!=null?ll.lng:ll[0],ll.lat!=null?ll.lat:ll[1]];}
   function startLL(){return originLL||userLL||(gwMap?gwMap.getCenter().toArray():ORIGIN);}
-  function openDirections(){dirMode=true;const b=document.getElementById('dirToggle');if(b)b.classList.add('on');document.getElementById('dirPanel').hidden=false;const pp=document.getElementById('poiPanel');if(pp)pp.hidden=true;const pt=document.getElementById('poiToggle');if(pt)pt.classList.remove('on');}
+  function openDirections(){dirMode=true;if(!originLL&&!userLL)ensureUserLocation();const b=document.getElementById('dirToggle');if(b)b.classList.add('on');document.getElementById('dirPanel').hidden=false;const pp=document.getElementById('poiPanel');if(pp)pp.hidden=true;const pt=document.getElementById('poiToggle');if(pt)pt.classList.remove('on');}
   function showPuck(v){if(originMk){try{originMk.getElement().style.display=v?'':'none';}catch(e){}}}
   function ensureStartMk(){if(startMk||!gwMap)return;const el=document.createElement('div');el.className=destClass('pin');el.innerHTML=destSVG('pin');startMk=new maplibregl.Marker({element:el,anchor:destAnchor('pin')}).setLngLat(originLL||ORIGIN).addTo(gwMap);}
   function setStart(ll,label){originLL=XY(ll);const fi=document.getElementById('fromInput');if(fi)fi.value=label||'Selected start';ensureStartMk();startMk.setLngLat(originLL);showPuck(false);}
-  function useMyLocation(){originLL=null;const fi=document.getElementById('fromInput');if(fi)fi.value='Your location';if(startMk){startMk.remove();startMk=null;}showPuck(true);if(!userLL)locateUser(true);if(destLL)computeRoute();}
+  function useMyLocation(){originLL=null;const fi=document.getElementById('fromInput');if(fi)fi.value='Your location';if(startMk){startMk.remove();startMk=null;}showPuck(!!userLL);if(!userLL)locateUser(true);if(destLL)computeRoute();}
   function placeDest(ll,label,kind){kind=kind||'dest';lastDestKind=kind;destLL=XY(ll);lastDest=destLL;lastDestLabel=label||'';if(destMk)destMk.remove();const el=document.createElement('div');el.className=destClass(kind);el.innerHTML=destSVG(kind);destMk=new maplibregl.Marker({element:el,anchor:destAnchor(kind)}).setLngLat(destLL).addTo(gwMap);const di=document.getElementById('destInput');if(di)di.value=label||'Dropped pin';}
   function refreshRouteColors(){const t=MT[curKey]||MT.metro;sp('gw-route-glow','line-color',t.routeCol);sp('gw-route-core','line-color',t.routeCol);}
   function handleMapPin(ll){if(pinTarget==='from')setStart(ll,'Selected start');else placeDest(ll);if(destLL)computeRoute();}
   function quickDest(ll){openDirections();placeDest(ll,'Dropped pin','pin');computeRoute();}
+  function ensureUserLocation(){
+    if(userLL)return Promise.resolve(userLL);
+    if(!navigator.geolocation)return Promise.resolve(null);
+    return new Promise(function(res){
+      var done=false;function fin(v){if(done)return;done=true;res(v);}
+      try{navigator.geolocation.getCurrentPosition(function(pos){onPos(pos);fin(userLL);},function(){fin(null);},{enableHighAccuracy:true,timeout:8000,maximumAge:60000});}catch(e){fin(null);}
+      setTimeout(function(){fin(userLL||null);},8500);
+    });
+  }
   async function computeRoute(){
-    if(!gwMap||!destLL)return;const s=gwMap.getSource('gw-route');const from=startLL();const dm=document.getElementById('dirMeta');
-    if(dm)dm.textContent='Finding route…';
+    if(!gwMap||!destLL)return;const s=gwMap.getSource('gw-route');const dm=document.getElementById('dirMeta');
+    if(!originLL&&!userLL){if(dm)dm.textContent='Getting your location\u2026';await ensureUserLocation();}
+    const from=startLL();
+    if(dm)dm.textContent='Finding route\u2026';
     let km,min,geom=null;
     try{
       const url='https://router.project-osrm.org/route/v1/driving/'+from[0]+','+from[1]+';'+destLL[0]+','+destLL[1]+'?overview=full&geometries=geojson';
       const r=await fetch(url);const j=await r.json();
       if(j&&j.code==='Ok'&&j.routes&&j.routes[0]){const rt=j.routes[0];geom=rt.geometry;km=rt.distance/1000;min=rt.duration/60;}
     }catch(e){}
-    if(!geom){geom={type:'LineString',coordinates:[from,destLL]};km=haversine(from,destLL)*1.3;min=km/38*60;lastRoute={est:true,km:km,min:min,geom:geom};}
+    if(!geom){
+      const dkm=haversine(from,destLL);
+      if(dkm>1200){
+        if(s)s.setData({type:'FeatureCollection',features:[]});
+        lastRoute=null;
+        if(dm)dm.innerHTML='No drivable route there \u2014 it\u2019s across water or too far to drive.';
+        const ti=document.getElementById('tripInfo');if(ti)ti.classList.remove('on');
+        try{gwMap.flyTo({center:destLL,zoom:Math.max(gwMap.getZoom(),12),duration:700});}catch(e){}
+        return;
+      }
+      geom={type:'LineString',coordinates:[from,destLL]};km=dkm*1.3;min=km/38*60;lastRoute={est:true,km:km,min:min,geom:geom};
+    }
     else lastRoute={est:false,km:km,min:min,geom:geom};
     if(s)s.setData({type:'Feature',properties:{},geometry:geom});
     updateTripInfo();fitRoute(from,destLL);
@@ -843,7 +865,7 @@
   function swapAB(){if(!destLL)return;const b=destLL.slice();const fi=document.getElementById('fromInput'),di=document.getElementById('destInput');const fromLabel=(fi&&fi.value)||'Your location';const toLabel=(di&&di.value)||'Destination';let a=originLL?originLL.slice():(userLL?userLL.slice():null);if(a){placeDest({lng:a[0],lat:a[1]},/^your location$/i.test(fromLabel)?'Your location':fromLabel);}setStart({lng:b[0],lat:b[1]},toLabel);computeRoute();}
   // Back-compat wrapper: drop a destination pin and route from the current start.
   async function setDestination(ll,label){placeDest(ll,label);await computeRoute();}
-  function clearRoute(){destLL=null;lastDest=null;lastRoute=null;originLL=null;if(destMk){destMk.remove();destMk=null;}if(startMk){startMk.remove();startMk=null;}showPuck(true);const s=gwMap&&gwMap.getSource('gw-route');if(s)s.setData({type:'FeatureCollection',features:[]});const di=document.getElementById('destInput');if(di)di.value='';const fi=document.getElementById('fromInput');if(fi)fi.value='Your location';const dm=document.getElementById('dirMeta');if(dm)dm.textContent='Set a start and destination — type an address, or tap the map.';const ti=document.getElementById('tripInfo');if(ti)ti.classList.remove('on');}
+  function clearRoute(){destLL=null;lastDest=null;lastRoute=null;originLL=null;if(destMk){destMk.remove();destMk=null;}if(startMk){startMk.remove();startMk=null;}showPuck(!!userLL);const s=gwMap&&gwMap.getSource('gw-route');if(s)s.setData({type:'FeatureCollection',features:[]});const di=document.getElementById('destInput');if(di)di.value='';const fi=document.getElementById('fromInput');if(fi)fi.value='Your location';const dm=document.getElementById('dirMeta');if(dm)dm.textContent='Set a start and destination — type an address, or tap the map.';const ti=document.getElementById('tripInfo');if(ti)ti.classList.remove('on');}
 
   function switchRealStyle(k){
     if(!gwMap)return;poiReady=false;
@@ -880,7 +902,7 @@
   function applyPixel(){if(!gwMap)return;const g=document.getElementById('gwmap');try{gwMap.setPixelRatio(window.devicePixelRatio||1);}catch(e){}if(g)g.classList.remove('pixelated');}
 
   function showPhone(){const f=document.getElementById('mapfallback');if(f)f.hidden=false;const g=document.getElementById('gwmap');if(g)g.style.display='none';}
-  function initSynthetic(){synthActive=true;try{gwMap=new maplibregl.Map({container:'gwmap',style:synthStyle(),center:ORIGIN,zoom:13.2,minZoom:5,maxZoom:19,attributionControl:false});const n=document.getElementById('mapnote');if(n)n.hidden=false;gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});}catch(e){showPhone();}}
+  function initSynthetic(){synthActive=true;try{gwMap=new maplibregl.Map({container:'gwmap',style:synthStyle(),center:ORIGIN,zoom:13.2,minZoom:5,maxZoom:19,attributionControl:false,renderWorldCopies:false,fadeDuration:0});const n=document.getElementById('mapnote');if(n)n.hidden=false;gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});}catch(e){showPhone();}}
   function toSynth(){if(gwMap){try{gwMap.remove()}catch(e){}gwMap=null;}if(typeof maplibregl!=='undefined')initSynthetic();else showPhone();}
   const RPAL={
     metro:{bg:'#141416',land:'#17181b',lc:'#181a1c',park:'#181a1c',water:'#1a1f24',bldg:'#24272c',bl:'#2d3137',
@@ -953,7 +975,7 @@
     if(gwStarted)return;gwStarted=true;
     if(typeof maplibregl==='undefined'){showPhone();return;}
     try{
-      gwMap=new maplibregl.Map({container:'gwmap',style:realStyle(curKey),center:ORIGIN,zoom:13,minZoom:5,maxZoom:19,pitch:0,attributionControl:false,fadeDuration:0});
+      gwMap=new maplibregl.Map({container:'gwmap',style:realStyle(curKey),center:ORIGIN,zoom:13,minZoom:5,maxZoom:19,pitch:0,attributionControl:false,fadeDuration:0,renderWorldCopies:false});
       let ok=false,done=false,fbTimer=null;
       gwMap.on('load',()=>{afterLoad();try{gwMap.resize()}catch(e){}});
       gwMap.on('sourcedata',e=>{if(e.sourceId==='openmaptiles'&&e.isSourceLoaded){ok=true;if(fbTimer){clearTimeout(fbTimer);fbTimer=null;}}});
@@ -980,7 +1002,7 @@
   async function runDirections(){
     const dm=document.getElementById('dirMeta');
     const fromV=fromInput.value.trim();
-    if(!fromV||/^your location$/i.test(fromV)){originLL=null;if(startMk){startMk.remove();startMk=null;}showPuck(true);}
+    if(!fromV||/^your location$/i.test(fromV)){originLL=null;if(startMk){startMk.remove();startMk=null;}showPuck(!!userLL);}
     else if(fromV!=='Selected start'){dm.textContent='Finding start…';const fc=await geocode(fromV);if(fc)setStart(fc,fromV);}
     const toV=destInput.value.trim();
     if(toV&&toV!=='Dropped pin'){dm.textContent='Finding place…';const tc=await geocode(toV);if(tc)placeDest(tc,toV);else if(!destLL){dm.textContent='Couldn’t find that place — try a more specific search, or tap the map.';return;}}
